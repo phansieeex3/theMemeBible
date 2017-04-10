@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="group3.tcss450.uw.edu.challengeapp">
+    package="group3.tcss450.uw.edu.thememebible">
 
     <application
         android:allowBackup="true"

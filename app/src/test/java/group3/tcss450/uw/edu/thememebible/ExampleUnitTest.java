@@ -1,4 +1,4 @@
-package group3.tcss450.uw.edu.challengeapp;
+package group3.tcss450.uw.edu.thememebible;
 
 import org.junit.Test;
 

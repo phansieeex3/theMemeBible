@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import group3.tcss450.uw.edu.challengeapp.R;
-
 
 /**
  * A simple {@link Fragment} subclass.

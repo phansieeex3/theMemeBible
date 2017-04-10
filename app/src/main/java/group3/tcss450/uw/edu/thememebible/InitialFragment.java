@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import group3.tcss450.uw.edu.challengeapp.R;
-
 
 /**
  * A simple {@link Fragment} subclass.
