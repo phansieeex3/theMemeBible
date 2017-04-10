@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ChallengeApp</string>
+    <string name="initial_fragment_title_textview">Welcome!</string>
+    <string name="login_initialfragment_button">Login</string>
+    <string name="register_initialfragment_button">Register</string>
+    <string name="display_fragment_title_textview">Display</string>
+    <string name="username_loginfragment_label">Username</string>
+    <string name="password_loginfragment_label">Password</string>
+    <string name="ok_loginfragment_button">OK</string>
+    <string name="username_key_loginfragment">username_key</string>
+    <string name="password_key_loginfragment">password_key</string>
+    <string name="confirm_password_key_loginfragment">confirm_password_key</string>
+    <string name="password_confirm_text">Confirm Password</string>
+</resources>
