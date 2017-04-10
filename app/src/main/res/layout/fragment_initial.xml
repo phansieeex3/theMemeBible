@@ -4,7 +4,7 @@
     android:id="@+id/fragInitial"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group3.tcss450.uw.edu.challengeapp.InitialFragment"
+    tools:context="group3.tcss450.uw.edu.challengeapp.group3.tcss450.uw.edu.thememebible.InitialFragment"
     android:orientation="vertical"
     android:baselineAligned="false">
 

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group3.tcss450.uw.edu.challengeapp.DisplayFragment">
+    tools:context="group3.tcss450.uw.edu.challengeapp.group3.tcss450.uw.edu.thememebible.DisplayFragment">
 
     <TextView
         android:id="@+id/tvUsername"

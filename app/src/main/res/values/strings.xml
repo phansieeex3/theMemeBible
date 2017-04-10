@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChallengeApp</string>
+    <string name="app_name">The Meme Bible</string>
     <string name="initial_fragment_title_textview">Welcome!</string>
     <string name="login_initialfragment_button">Login</string>
     <string name="register_initialfragment_button">Register</string>

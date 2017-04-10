@@ -1,4 +1,4 @@
-package group3.tcss450.uw.edu.challengeapp;
+package group3.tcss450.uw.edu.thememebible;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import group3.tcss450.uw.edu.challengeapp.R;
 
 
 /**

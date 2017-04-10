@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/home/peter/AndroidStudioProjects/ChallengeApp/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="/Users/Phansa/Desktop/theMemeBible/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="20faa90621b9ff2a58f9204f0074e067b7aa796a">
-        <dex dex="/home/peter/AndroidStudioProjects/ChallengeApp/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_6497c0bc2debaf6309ec5eee8abfbd38510355c5/classes.dex" />
+        sha1="743abb0f3a474c6a44defa50026a31e5a1dd3180">
+        <dex dex="/Users/Phansa/Desktop/theMemeBible/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_3554382977d4247db37f0ea7d68e1a6a2db5f940/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/peter/AndroidStudioProjects/ChallengeApp/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/Users/Phansa/Desktop/theMemeBible/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="/home/peter/AndroidStudioProjects/ChallengeApp/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_edce4a9a801763d34d0ee34804a53699d08a44a9/classes.dex" />
+        <dex dex="/Users/Phansa/Desktop/theMemeBible/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_fe075e9182b3a2cf40441f2b5bf62272c4590092/classes.dex" />
     </item>
 
 </items>

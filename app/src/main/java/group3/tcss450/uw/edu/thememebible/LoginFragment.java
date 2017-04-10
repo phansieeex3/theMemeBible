@@ -1,7 +1,6 @@
-package group3.tcss450.uw.edu.challengeapp;
+package group3.tcss450.uw.edu.thememebible;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -11,33 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.util.Objects;
+import group3.tcss450.uw.edu.challengeapp.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RegisterFragment.OnFragmentInteractionListener} interface
+ * {@link LoginFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class RegisterFragment extends Fragment implements View.OnClickListener {
-    private static final String TAG = "RegisterFragment";
+public class LoginFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = "LoginFragment";
     private OnFragmentInteractionListener mListener;
 
-    public RegisterFragment() {
+    public LoginFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_register, container, false);
+        View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        // add listener for Register button
-        Button b = (Button) v.findViewById(R.id.btnRegisterUser);
+        // add listener for OK button
+        Button b = (Button) v.findViewById(R.id.btnOK);
         b.setOnClickListener(this);
 
         return v;
@@ -61,51 +58,42 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onClick(View view) {
         if (mListener != null) {
-            if (view.getId() == R.id.btnRegisterUser) {
-                Log.i(TAG, "btnRegister button pressed");
+            if (view.getId() == R.id.btnOK) {
+                Log.i(TAG, "OK button pressed");
 
                 // get edit text references
-                EditText etUsername = (EditText) getActivity().findViewById(R.id.editUsername);
-                EditText etPassword = (EditText) getActivity().findViewById(R.id.editPassword);
-                EditText etPasswordConf = (EditText) getActivity().findViewById(R.id.editPasswordConf);
+                EditText etUsername = (EditText) getActivity().findViewById(R.id.editTextUsername);
+                EditText etPassword = (EditText) getActivity().findViewById(R.id.editTextPassword);
                 String strUsername = etUsername.getText().toString();
                 String strPassword = etPassword.getText().toString();
-                String strPasswordConf = etPasswordConf.getText().toString();
 
-                // check if any are empty
+                // check if either are empty
                 if (TextUtils.isEmpty(strUsername)) {
                     etUsername.setError("Please enter your username");
                     return;
                 } else if (TextUtils.isEmpty(strPassword)) {
                     etPassword.setError("Please enter your password");
                     return;
-                } else if (TextUtils.isEmpty(strPasswordConf)) {
-                    etPasswordConf.setError("Please confirm your password");
-                    return;
                 }
-
-                if (!strPassword.equals(strPasswordConf)) {
-                    Toast.makeText(getContext(), "Passwords do not match!",Toast.LENGTH_SHORT).show();
-                    etPassword.setText("");
-                    etPasswordConf.setText("");
-                    return;
-                }
-
-                Log.e(TAG, "strUser: " + strUsername + ", strPassword: " + strPassword + ", "
-                + strPasswordConf);
 
                 // build arguments to pass through
                 Bundle args = new Bundle();
                 args.putString(getString(R.string.username_key_loginfragment), strUsername);
                 args.putString(getString(R.string.password_key_loginfragment), strPassword);
-                args.putString(getString(R.string.confirm_password_key_loginfragment), strPasswordConf);
 
-                // should the edittext boxes be cleared at this point?
+                // clear edittext boxes
+                etUsername.setText("");
+                etPassword.setText("");
 
                 // give MainActivity the args bundle and make callback
-                mListener.getRegistrationInformation(args);
+                mListener.getLogin(args);
                 mListener.onFragmentInteraction(view.getId());
             }
         }
@@ -123,6 +111,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(int buttonID);
-        void getRegistrationInformation(Bundle args);
+        void getLogin(Bundle args);
     }
 }
