@@ -4,9 +4,21 @@
     android:id="@+id/fragInitial"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group3.tcss450.uw.edu.thememebible.group3.tcss450.uw.edu.thememebible.InitialFragment"
+    tools:context="group3.tcss450.uw.edu.thememebible.InitialFragment"
     android:orientation="vertical"
     android:baselineAligned="false">
+
+    <ImageView
+        android:layout_width="118dp"
+        android:layout_height="119dp"
+        android:src="@drawable/cropped_doge"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/tvLogin"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="133dp"
+        android:layout_marginTop="69dp" />
 
     <Button
         android:id="@+id/btnLogin"

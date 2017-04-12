@@ -1,39 +1,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group3.tcss450.uw.edu.thememebible.group3.tcss450.uw.edu.thememebible.LoginFragment">
+    tools:context="group3.tcss450.uw.edu.thememebible.LoginFragment">
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/cropped_doge"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/tvLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="55dp"
         android:ems="10"
         android:hint="@string/username_loginfragment_label"
         android:inputType="textVisiblePassword|textNoSuggestions"
-        android:layout_below="@+id/tvLogin"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextUsername"
-        android:layout_alignStart="@+id/editTextUsername"
-        android:layout_below="@+id/editTextUsername"
-        android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="@string/password_loginfragment_label"
         android:inputType="textNoSuggestions|textPassword"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/editTextUsername"
+        android:layout_alignLeft="@+id/editTextUsername"
+        android:layout_alignStart="@+id/editTextUsername" />
 
     <Button
         android:id="@+id/btnOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="@string/ok_loginfragment_button"
+        android:layout_marginTop="42dp"
+        android:text="@string/login_initialfragment_button"
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true" />
 
@@ -41,10 +49,10 @@
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/login_initialfragment_button"
+        android:text="@string/app_name"
         android:textSize="28sp"
         android:textStyle="bold" />
+
+
 </RelativeLayout>
