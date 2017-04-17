@@ -5,34 +5,23 @@
     tools:context="group3.tcss450.uw.edu.thememebible.DisplayFragment">
 
     <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="117dp"
-        android:text="@string/username_loginfragment_label"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/tvPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvUsername"
-        android:layout_alignStart="@+id/tvUsername"
-        android:layout_below="@+id/tvUsername"
-        android:layout_marginTop="14dp"
-        android:text="@string/password_loginfragment_label"
-        android:textSize="18sp" />
-
-    <TextView
         android:id="@+id/tvDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/marginTop"
         android:text="@string/display_fragment_title_textview"
         android:textSize="28sp"
-        android:textStyle="bold"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="117dp"
+        android:textSize="18sp" />
+
 </RelativeLayout>

@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         DisplayFragment.OnFragmentInteractionListener
 {
     private static final String TAG = "MainActivity";
+    protected static final String PARTIAL_URL
+            = "http://cssgate.insttech.washington.edu/~peterphe/challengeappweb/app";
     private Bundle mLoginArgs;
     private Bundle mRegisterArgs;
 

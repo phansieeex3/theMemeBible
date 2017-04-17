@@ -12,7 +12,7 @@
         android:text="@string/register_initialfragment_button"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/marginTop"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/imageView2"
         android:layout_alignStart="@+id/imageView2" />
@@ -67,8 +67,9 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:srcCompat="@drawable/cropped_doge"
+        android:layout_marginTop="27dp"
         android:layout_below="@+id/tvRegister"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp" />
+        android:contentDescription="@string/app_name" />
 
 </RelativeLayout>

@@ -3,7 +3,6 @@ package group3.tcss450.uw.edu.thememebible;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,17 +53,12 @@ public class DisplayFragment extends Fragment {
 
         // unpack arguments passed by Main activity
         Bundle args = getArguments();
-        String username = args.getString(getString(R.string.username_key_loginfragment));
-        String password = args.getString(getString(R.string.password_key_loginfragment));
-
-        Log.i(TAG, username);
-        Log.i(TAG, password);
+        //String response = args.getString(getString(R.string.username_key_loginfragment));
 
         // update textviews
-        TextView tvUsername = (TextView) getActivity().findViewById(R.id.tvUsername);
-        TextView tvPassword = (TextView) getActivity().findViewById(R.id.tvPassword);
-        tvUsername.setText(username);
-        tvPassword.setText(password);
+        TextView tvUsername = (TextView) getActivity().findViewById(R.id.tvMessage);
+        tvUsername.setText(args.getString(getString(R.string.response_key_displayfragment)));
+
     }
 
     /**
