@@ -62,14 +62,14 @@
         android:layout_marginTop="14dp"
         android:text="@string/register_initialfragment_button" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@drawable/cropped_doge"
-        android:layout_marginTop="27dp"
-        android:layout_below="@+id/tvRegister"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/app_name" />
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView2"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--app:srcCompat="@drawable/cropped_doge"-->
+        <!--android:layout_marginTop="27dp"-->
+        <!--android:layout_below="@+id/tvRegister"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:contentDescription="@string/app_name" />-->
 
 </RelativeLayout>

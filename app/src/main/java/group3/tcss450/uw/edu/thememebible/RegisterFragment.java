@@ -111,7 +111,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     // asynctask for registration
     private class RegisterWebServiceTask extends AsyncTask<String, Void, String> {
 
-        private final String SERVICE = "_register.php";
+        private final String SERVICE = "register.php";
         private final int mButtonID;
 
         public RegisterWebServiceTask(int theButtonID) {

@@ -1,0 +1,37 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_menu"
+    android:layout_gravity="center"
+    tools:context="group3.tcss450.uw.edu.thememebible.MainMenu"
+    android:weightSum="1">
+
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/meme_catalog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.20"
+        android:text="Catalog"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="170dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_meme"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="My Meme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meme_catalog"
+        app:layout_constraintVertical_bias="0.027" />
+
+</android.support.constraint.ConstraintLayout>

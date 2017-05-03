@@ -8,19 +8,19 @@
     android:orientation="vertical"
     android:baselineAligned="false">
 
-    <ImageView
-        android:layout_width="118dp"
-        android:layout_height="119dp"
-        android:src="@drawable/cropped_doge"
-        android:id="@+id/imageView"
-        android:layout_below="@+id/tvInitial"
-        android:layout_centerHorizontal="true"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="133dp"
-        android:layout_marginLeft="133dp"
-        android:layout_marginTop="69dp"
-        android:contentDescription="@string/app_name" />
+    <!--<ImageView-->
+        <!--android:layout_width="118dp"-->
+        <!--android:layout_height="119dp"-->
+        <!--android:src="@drawable/cropped_doge"-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_below="@+id/tvInitial"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--android:layout_marginStart="133dp"-->
+        <!--android:layout_marginLeft="133dp"-->
+        <!--android:layout_marginTop="69dp"-->
+        <!--android:contentDescription="@string/app_name" />-->
 
     <Button
         android:id="@+id/btnLogin"
