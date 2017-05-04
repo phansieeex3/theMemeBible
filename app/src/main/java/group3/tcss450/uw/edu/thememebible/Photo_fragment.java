@@ -101,6 +101,7 @@ public class Photo_fragment extends Fragment {
         String url = buildUrl("", "");
         //URL url1 = new URL(url);
         task.execute(url, "Downloading photos!");
+        Log.e("URL", url);
 
         return v;
     }
@@ -155,24 +156,24 @@ public class Photo_fragment extends Fragment {
         protected String doInBackground(String... urls) {
             String response = "";
             HttpURLConnection urlConnection = null;
-            for (String url : urls) {
-                try {
-                    URL urlObject = new URL(url);
-                    urlConnection = (HttpURLConnection) urlObject.openConnection();
-                    InputStream content = urlConnection.getInputStream();
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
-                    while ((s = buffer.readLine()) != null) {
-                        response += s;
-                    }
-                } catch (Exception e) {
-                    response = "Connection failed: " + e.getMessage();
-                } finally {
-                    if (urlConnection != null) urlConnection.disconnect();
+            String url = urls[0];
+            try {
+                URL urlObject = new URL(url);
+                urlConnection = (HttpURLConnection) urlObject.openConnection();
+                InputStream content = urlConnection.getInputStream();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                String s = "";
+                while ((s = buffer.readLine()) != null) {
+                    response += s;
                 }
+            } catch (Exception e) {
+                response = "Unable to connect, Reason: "
+                        + e.getMessage();
+            } finally {
+                if (urlConnection != null)
+                    urlConnection.disconnect();
             }
-            return response;
-        }
+            return response; }
 
         /**
          * We retrieve data only until there are 10 trip items in the view, if there are any more

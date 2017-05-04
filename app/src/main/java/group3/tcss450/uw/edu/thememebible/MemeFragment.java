@@ -208,7 +208,7 @@ public class MemeFragment extends Fragment {
                 Log.e("My app", "Could not parse malformed JSON: " + t.toString());
             }
 
-            Log.d("ShowID ReSULT", result);
+            Log.d(TAG, result);
 
 
            // Geocoder geocoder;
