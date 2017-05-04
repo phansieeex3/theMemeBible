@@ -27,6 +27,8 @@ public class Photo_fragment extends Fragment {
     }
 
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,12 +36,15 @@ public class Photo_fragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_photo_fragment, container, false);
         rv = (RecyclerView) v.findViewById(R.id.recyclerView);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
+
         initializeData();
         initializeAdapter();
+
+        rv.setHasFixedSize(true);
+
         return v;
     }
 

@@ -14,8 +14,8 @@
         android:textStyle="bold"
         android:layout_marginTop="@dimen/marginTop"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/imageView2"
-        android:layout_alignStart="@+id/imageView2" />
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
 
     <EditText
         android:id="@+id/editUsername"
@@ -25,7 +25,7 @@
         android:ems="10"
         android:hint="@string/username_loginfragment_label"
         android:inputType="textNoSuggestions|textVisiblePassword"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
     <EditText

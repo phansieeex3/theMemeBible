@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     tools:context="group3.tcss450.uw.edu.thememebible.Photo_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerView"
+        android:layout_gravity="center_horizontal"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        android:layout_height="match_parent" />
 </FrameLayout>
