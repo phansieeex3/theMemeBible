@@ -1,6 +1,7 @@
 package group3.tcss450.uw.edu.thememebible;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     private List<Photo> mPhotos;
 
 
+    /**constructor for recyclerAdapter
+     * @param photos List of photos to be displayed. */
     public RecyclerAdapter(List<Photo> photos) {
         this.mPhotos= photos;
     }
@@ -36,7 +39,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     public PhotoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item_row, parent, false);
-        PhotoHolder viewHolder = new PhotoHolder(inflatedView);
+       PhotoHolder viewHolder = new PhotoHolder(inflatedView);
         return viewHolder;
     }
 
@@ -46,6 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
 //        Photo itemPhoto = mPhotos.get(position);
         holder.mItemImage.setImageResource(mPhotos.get(position).photoID);
 //        holder.bindPhoto(itemPhoto);
+        Log.e("REcycler adapter size", "" +mPhotos.size());
 
 
     }

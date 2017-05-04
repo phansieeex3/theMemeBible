@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                         .replace(R.id.fragmentContainer, new Photo_fragment())
                         .addToBackStack(null);
                 transaction.commit();
+
+                //send type of  catalog string.
                 break;
 
         }
