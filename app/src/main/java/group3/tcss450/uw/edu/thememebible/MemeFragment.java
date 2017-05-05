@@ -14,13 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import MemeObject.Meme;
-import Model.MemeBrowserRecyclerViewAdapter;
-import group3.tcss450.uw.edu.thememebible.dummy.DummyContent;
-import group3.tcss450.uw.edu.thememebible.dummy.DummyContent.DummyItem;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,7 +23,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
+import group3.tcss450.uw.edu.thememebible.dummy.DummyContent;
+import group3.tcss450.uw.edu.thememebible.dummy.DummyContent.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -165,7 +162,7 @@ public class MemeFragment extends Fragment {
         /**
          * We retrieve data only until there are 10 trip items in the view, if there are any more
          * trips that need to be retrieved from the database, then the earliest trips are deleted while
-         * the latest trips are kept, only dipslaying the previous 10 trips.
+         * the latest trips are kept, only displaying the previous 10 trips.
          *
          * @param result String
          */

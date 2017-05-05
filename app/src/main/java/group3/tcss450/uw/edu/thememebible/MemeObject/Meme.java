@@ -1,4 +1,4 @@
-package MemeObject;
+package group3.tcss450.uw.edu.thememebible.MemeObject;
 
 import android.util.Log;
 

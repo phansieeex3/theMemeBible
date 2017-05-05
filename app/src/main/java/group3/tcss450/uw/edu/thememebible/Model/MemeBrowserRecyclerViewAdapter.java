@@ -1,13 +1,13 @@
-package Model;
+package group3.tcss450.uw.edu.thememebible.Model;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
+import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
 
 
 import java.util.List;
 
-import MemeObject.Meme;
 
 /**
  * Created by Phansa on 5/3/17.
