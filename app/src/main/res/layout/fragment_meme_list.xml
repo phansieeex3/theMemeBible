@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recyclerView"
-    android:name="group3.tcss450.uw.edu.thememebible.Photo_fragment"
+    android:name="group3.tcss450.uw.edu.thememebible.PhotoFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:background="@color/colorAccent"
+
     app:layoutManager="LinearLayoutManager"
     tools:context="group3.tcss450.uw.edu.thememebible.PhotoFragment"
-    tools:listitem="@layout/fragment_meme" />
+    tools:listitem="@layout/recyclerview_item_row">
+
+</android.support.v7.widget.RecyclerView>

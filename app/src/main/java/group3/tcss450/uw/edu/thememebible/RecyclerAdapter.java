@@ -21,7 +21,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     public RecyclerAdapter(List<Photo> photos) {
         this.mPhotos= photos;
     }
-    //1
+
+    /**
+     * Class for view holder.
+     */
     public static class PhotoHolder extends RecyclerView.ViewHolder {
         //2
         private ImageView mItemImage;
@@ -46,12 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     @Override
     public void onBindViewHolder(RecyclerAdapter.PhotoHolder holder, int position) {
 
-//        Photo itemPhoto = mPhotos.get(position);
-       // holder.mItemImage.setImageResource(mPhotos.get(position).photoID);
         holder.mItemImage.setImageDrawable(mPhotos.get(position).mPhotoDraw);
-//        holder.bindPhoto(itemPhoto);
-        Log.e("REcycler adapter size", "" +mPhotos.size());
-
 
     }
 

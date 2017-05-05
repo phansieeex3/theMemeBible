@@ -10,6 +10,7 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,12 +48,11 @@ public class PhotoFragment extends Fragment {
     private static final String TAG = "MEME FRAGMENT";
     private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
     //hardcode for now.
-    private String mUser = "yellowbears";
+    private String mUser = "phansac";
     private String mPass = "nomnomnom2";
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 3;
-
+    private static final int COLUMN_COUNT = 3;
     private ImageView mItemImage;
 
     /**different links for different searches.*/
@@ -79,7 +79,6 @@ public class PhotoFragment extends Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            //your codes here
 
         }
 
@@ -95,10 +94,11 @@ public class PhotoFragment extends Fragment {
             /*If orientation changes. then view four on each side.
              * source: http://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview */
             if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-                rv.setLayoutManager(new GridLayoutManager(context, 3));
+                rv.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT));
             }
+
             else{
-                rv.setLayoutManager(new GridLayoutManager(context, 4));
+                rv.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT+1));
             }
 
         }
@@ -112,7 +112,6 @@ public class PhotoFragment extends Fragment {
 
         AsyncTask<String, Void, String> task = new DownloadPhotos();
         String url = buildUrl("", "");
-        //URL url1 = new URL(url);
         task.execute(url, "Downloading photos!");
         Log.e("URL", url);
 
@@ -134,15 +133,10 @@ public class PhotoFragment extends Fragment {
             if(d != null)
             mPhoto.add(new Photo((Drawable)d));
 
-            //Photo m = (Photo) Picasso.with(getContext()).load(mMemes.get(i).getmUrl()); //.into(mItemImage);
-           // mPhoto.add(new Photo(LoadImageFromWebOperations(mMemes.get(i).getmUrl())));
+
 
         }
-        //mPhoto.add(new Photo(R.drawable.cropped_doge));
-      // mPhoto.add(new Photo(R.drawable.cropped_doge));
-       // mPhoto.add(new Photo(R.drawable.cropped_doge));
-       // mPhoto.add(new Photo(R.drawable.cropped_doge));
-      //  mPhoto.add(new Photo(R.drawable.cropped_doge));
+
 
     }
 
@@ -166,8 +160,6 @@ public class PhotoFragment extends Fragment {
 
     private void initializeAdapter(){
         RecyclerAdapter adapter = new RecyclerAdapter(mPhoto);
-       // RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
-        //rv.setLayoutManager(mLayoutManager);
         rv.setAdapter(adapter);
     }
 
@@ -257,15 +249,10 @@ public class PhotoFragment extends Fragment {
                     mMemes.add(Meme.getMeme(object));
                 }
 
-                String size = "" + obj.length();
-                Log.e("TopTEN ", obj.toString());
-                Log.e("LENGTH", size);
+
 
                 Log.e("holy " , mMemes.toString());
 
-                //args.putSerializable("Array", list);
-
-                //mArraysetlistArgs = args;
 
 
             }catch (Throwable t){
@@ -275,27 +262,8 @@ public class PhotoFragment extends Fragment {
             Log.d(TAG, result);
 
 
-            //initializeData();
-
-            mPhoto = new ArrayList<>();
-            Log.e("Meme size" , "" + mMemes.size());
-
-            for(int i = 0 ; i < mMemes.size(); i++)
-            {
-                Log.e("Meme Url" , "" + mMemes.get(i).getmUrl() );
-                Drawable d = LoadImageFromWebOperations(mMemes.get(i).getmUrl());
-                if(d != null)
-                    mPhoto.add(new Photo((Drawable)d));
-
-                //Photo m = (Photo) Picasso.with(getContext()).load(mMemes.get(i).getmUrl()); //.into(mItemImage);
-                // mPhoto.add(new Photo(LoadImageFromWebOperations(mMemes.get(i).getmUrl())));
-
-            }
+            initializeData();
             initializeAdapter();
-
-            
-            //Add the trip items to the view
-            //mRecyclerView.setAdapter(new MemeBrowserRecyclerViewAdapter(list));
 
         }
     }
