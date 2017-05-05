@@ -29,10 +29,19 @@ public class Meme implements Serializable
     private int mInstanceCount;
     /*ranking*/
     private int mRanking;
-    /*entityVotesSummary*/
-    private EntityVoteSummary mEntityVotesSummary;
+
     /*imageUrl*/
     private String mUrl;
+    /*entityName*/
+    private String mEntityName;
+    /*entityID*/
+    private int mEntityID;
+    /*TotalVotesSum*/
+    private int mTotalVotesSum;
+    /*userID*/
+    private int mUserID;
+    /*userVoteScore*/
+    private int mUserVoteScore;
 
     /* Empty Constructor */
     public Meme(){}
@@ -57,7 +66,13 @@ public class Meme implements Serializable
             m.mUrl = meme.getString("imageUrl");
 
             //parse through the object so that it shows to entityVotesSummary
-           // m.mEntityVotesSummary = new EntityVoteSummary();
+            JSONObject entity = meme.getJSONObject("entityVotesSummary");
+
+            m.mEntityName = entity.getString("entityName");
+            m.mEntityID = entity.getInt("entityID");
+            m.mTotalVotesSum = entity.getInt("totalVotesSum");
+            m.mUserID = entity.getInt("userID");
+            m.mUserVoteScore = entity.getInt("userVoteScore");
 
 
 
@@ -95,70 +110,49 @@ public class Meme implements Serializable
     public int getmRanking() {
         return mRanking;
     }
+    public String getmEntityName() {
+        return mEntityName;
+    }
 
-    public EntityVoteSummary getmEntityVotesSummary() {
-        return mEntityVotesSummary;
+    public int getmEntityID() {
+        return mEntityID;
+    }
+
+    public int getmTotalVotesSum() {
+        return mTotalVotesSum;
+    }
+
+    public int getmUserID() {
+        return mUserID;
+    }
+
+    public int getmUserVoteScore() {
+        return mUserVoteScore;
     }
 
 
+    /** *
+     * for testing purposes overriding the toString for this object.
+     * @return String that has information about the meme.
+     */
+    @Override
+    public String toString(){
+        String meme = "";
 
+
+        meme += "Display name: " + mDisplayName + ", ";
+        meme += "imageID: " + mImageID + ", ";
+        meme += "ranking:" + mRanking + ", ";
+        meme += "entity name :" + mEntityName + ", ";
+        meme += "entity id :" + mEntityID + ", ";
+        meme += "url:" + mUrl + "\n";
+        return meme;
+    }
 
 
     public String getmUrl() {
         return mUrl;
     }
 
-    /* Another inner object that holds the entityVoteSummary*/
-    public class EntityVoteSummary implements Serializable{
 
-        /*entityName*/
-        private String mEntityName;
-        /*entityID*/
-        private int mEntityID;
-        /*TotalVotesSum*/
-        private int mTotalVotesSum;
-        /*userID*/
-        private int mUserID;
-        /*userVoteScore*/
-        private int mUserVoteScore;
-
-        public  EntityVoteSummary getEntityVoteSummary(final JSONObject meme){
-            EntityVoteSummary es = new EntityVoteSummary();
-
-            try{
-
-                es.mEntityName = meme.getString("entityName");
-                es.mEntityID = meme.getInt("entityID");
-                es.mTotalVotesSum = meme.getInt("totalVotesSum");
-                es.mUserID = meme.getInt("userID");
-                es.mUserVoteScore = meme.getInt("userVoteScore");
-
-            }catch(JSONException e){
-
-                Log.e(TAG, e.getMessage());
-            }
-
-            return es;
-        }
-
-        public String getmEntityName() {
-            return mEntityName;
-        }
-
-        public int getmEntityID() {
-            return mEntityID;
-        }
-
-        public int getmTotalVotesSum() {
-            return mTotalVotesSum;
-        }
-
-        public int getmUserID() {
-            return mUserID;
-        }
-
-        public int getmUserVoteScore() {
-            return mUserVoteScore;
-        }
-    }
 }

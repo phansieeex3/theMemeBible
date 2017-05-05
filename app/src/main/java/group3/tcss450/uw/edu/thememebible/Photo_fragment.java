@@ -197,11 +197,11 @@ public class Photo_fragment extends Fragment {
 
             Bundle args = new Bundle();
             //args.putString("Random Setlist", result);
-            /*
+
             try {
 
                 //parse in the objects.
-                JSONArray obj = new JSONArray(result);
+                JSONArray obj = new JSONObject(result).getJSONArray("result");
                 Meme m = new Meme();
                 for(int i =0 ; i < obj.length(); i++)
                 {
@@ -213,6 +213,8 @@ public class Photo_fragment extends Fragment {
                 Log.e("TopTEN ", obj.toString());
                 Log.e("LENGTH", size);
 
+                Log.e("holy " , list.toString());
+
                 //args.putSerializable("Array", list);
 
                 //mArraysetlistArgs = args;
@@ -221,7 +223,7 @@ public class Photo_fragment extends Fragment {
             }catch (Throwable t){
                 Log.e("TAG", "Could not parse malformed JSON: " + t.toString());
             }
-*/
+
             Log.d(TAG, result);
 
 
