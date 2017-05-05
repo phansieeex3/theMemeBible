@@ -94,7 +94,7 @@ public class PhotoFragment extends Fragment {
             /*If orientation changes. then view four on each side.
              * source: http://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview */
             if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-                rv.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT));
+                rv.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT, 0, false));
             }
 
             else{
