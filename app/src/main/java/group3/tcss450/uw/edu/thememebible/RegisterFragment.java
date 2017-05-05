@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.regex.Pattern;
 
 
 /**
@@ -34,6 +35,7 @@ import java.net.URLEncoder;
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "RegisterFragment";
     private OnFragmentInteractionListener mListener;
+    private static final int MINIMUM_LENGTH = 6;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -82,8 +84,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 String strPassword = etPassword.getText().toString();
                 String strPasswordConf = etPasswordConf.getText().toString();
 
-                // check if any are empty
-                if (TextUtils.isEmpty(strUsername)) {
+                // check lengths
+                if (strUsername.length() < MINIMUM_LENGTH || !isAlphanumeric(strUsername)) {
+                    showToast("Username must be a minimum of " + MINIMUM_LENGTH
+                            + " alphanumeric characters!");
+                    return;
+                } else if (strPassword.length() < MINIMUM_LENGTH || !isAlphanumeric(strPassword)) {
+                    showToast("Password must be a minimum of " + MINIMUM_LENGTH
+                            + " alphanumeric characters!");
+                    return;
+                } else if (TextUtils.isEmpty(strUsername)) { // check if any edittexts are empty
                     etUsername.setError("Please enter your username");
                     return;
                 } else if (TextUtils.isEmpty(strPassword)) {
@@ -92,10 +102,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 } else if (TextUtils.isEmpty(strPasswordConf)) {
                     etPasswordConf.setError("Please confirm your password");
                     return;
-                }
-
-                if (!strPassword.equals(strPasswordConf)) {
-                    Toast.makeText(getContext(), "Passwords do not match!",Toast.LENGTH_SHORT).show();
+                } else if (!strPassword.equals(strPasswordConf)) { // check if passwords don't match
+                    showToast("Passwords do not match!");
                     etPassword.setText("");
                     etPasswordConf.setText("");
                     return;
@@ -108,7 +116,28 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    // asynctask for registration
+    /**
+     * Helper method to check if a string contains alphanumeric characters only.
+     *
+     * @param theString the string to check
+     * @return true if alphanumeric, false otherwise
+     */
+    private boolean isAlphanumeric(String theString) {
+        return theString.matches("[a-zA-Z0-9]+");
+    }
+
+    /**
+     * Helper method to display a Toast to the user.
+     *
+     * @param theString the message to display
+     */
+    private void showToast(String theString) {
+        Toast.makeText(getContext(), theString, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * This class contains the service required for registering as a new user in the application.
+     */
     private class RegisterWebServiceTask extends AsyncTask<String, Void, String> {
 
         private final String SERVICE = "register.php";

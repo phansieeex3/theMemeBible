@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-public class MainMenu extends Fragment implements View.OnClickListener{
+public class MainMenuFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -19,7 +19,7 @@ public class MainMenu extends Fragment implements View.OnClickListener{
 
     private OnFragmentInteractionListener mListener;
 
-    public MainMenu() {
+    public MainMenuFragment() {
         // Required empty public constructor
     }
 

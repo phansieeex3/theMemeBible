@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "group3.tcss450.uw.edu.challengeapp"
+        applicationId "group3.tcss450.uw.edu.thememebible"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1

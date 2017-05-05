@@ -1,24 +1,24 @@
 package group3.tcss450.uw.edu.thememebible;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements InitialFragment.OnFragmentInteractionListener,
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
-        DisplayFragment.OnFragmentInteractionListener, MainMenu.OnFragmentInteractionListener, Catalog_fragment.OnFragmentInteractionListener
+        DisplayFragment.OnFragmentInteractionListener, MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener
 
 
 {
     private static final String TAG = "MainActivity";
-    protected static final String PARTIAL_URL
-            = "http://cssgate.insttech.washington.edu/~vhoang90/webservice/";
+    protected static final String PARTIAL_URL = "http://thememebible.ddns.net/app/app_";
     private Bundle mLoginArgs;
     private Bundle mRegisterArgs;
     private RecyclerView mRecyclerView;
@@ -56,85 +56,53 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     // implements all button press callbacks from other Fragments
     @Override
     public void onFragmentInteraction(int buttonID) {
-        FragmentTransaction transaction;
-        DisplayFragment display;
-        MainMenu menu;
-        Catalog_fragment catalog;
 
+        // handle different buttonIDs
         switch(buttonID) {
-            case R.id.btnLogin:
-                Log.i(TAG, "btnLogin buttonID");
-                transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, new LoginFragment())
-                        .addToBackStack(null);
-                transaction.commit();
+            case R.id.btnLogin: // from InitialFragment
+                loadFragment(new LoginFragment());
                 break;
 
-            case R.id.btnRegister:
-                Log.i(TAG, "btnRegister buttonID");
-                transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, new RegisterFragment())
-                        .addToBackStack(null);
-                transaction.commit();
+            case R.id.btnRegister: // from InitialFragment
+                loadFragment(new RegisterFragment());
                 break;
 
-            // redundant but oh well
-            case R.id.btnOK:
-                Log.i(TAG, "btnOK buttonID");
-
-                display = new DisplayFragment();
-                menu = new MainMenu();
-                menu.setArguments(mLoginArgs);
-
-
-                transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, menu)
-                        .addToBackStack(null);
-                transaction.commit();
+            case R.id.btnOK: // from LoginFragment
+                loadFragment(new MainMenuFragment());
                 break;
 
-            // redundant but oh well
-            case R.id.btnRegisterUser:
-                Log.i(TAG, "btnRegister buttonID");
+            case R.id.btnRegisterUser: // from RegisterFragment
+                Toast.makeText(this, "Thanks for registering!", Toast.LENGTH_SHORT).show();
+                loadFragment(new MainMenuFragment());
+                break;
 
-                display = new DisplayFragment();
-                display.setArguments(mRegisterArgs);
+            case R.id.meme_catalog: // from MainMenuFragment
+                loadFragment(new CatalogFragment());
+                break;
 
-                transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, display)
-                        .addToBackStack(null);
-                transaction.commit();
+            case R.id.my_meme: // from MainMenuFragment
+                loadFragment(new CatalogFragment());
                 break;
-            case R.id.meme_catalog:
-                Log.i(TAG, "Meme Catalog id");
-                transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, new Catalog_fragment())
-                        .addToBackStack(null);
-                transaction.commit();
-                break;
-            case R.id.my_meme:
-                transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, new Catalog_fragment())
-                        .addToBackStack(null);
-                transaction.commit();
-                break;
-            case R.id.catalog_button1:
-                transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, new Photo_fragment())
-                        .addToBackStack(null);
-                transaction.commit();
+
+            case R.id.catalog_button1: // from CatalogFragment
+                loadFragment(new PhotoFragment());
 
                 //send type of  catalog string.
                 break;
-
         }
+    }
+
+    /**
+     * Helper method to switch out fragments.
+     *
+     * @param theFragment the fragment to be loaded
+     */
+    private void loadFragment(Fragment theFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, theFragment)
+                .addToBackStack(null);
+        transaction.commit();
     }
 
     // callback for DisplayFragment data

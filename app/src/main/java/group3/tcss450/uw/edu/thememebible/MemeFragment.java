@@ -41,8 +41,7 @@ public class MemeFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String TAG = "MEME FRAGMENT";
-    private static final String API_KEY =
-            "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
+    private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
     //hardcode for now.
     private String mUser = "yellowbears";
     private String mPass = "nomnomnom2";
@@ -53,6 +52,7 @@ public class MemeFragment extends Fragment {
 
     /**different links for different searches.*/
     private String mLink = "http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12&apiKey=demo";
+
 
 
 

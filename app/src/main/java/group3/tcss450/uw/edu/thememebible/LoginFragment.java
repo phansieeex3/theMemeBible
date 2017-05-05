@@ -102,7 +102,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    // asynctask for login
+    /**
+     * This class contains the service required for logging into the application.
+     */
     private class LoginWebServiceTask extends AsyncTask<String, Void, String> {
 
         private final String SERVICE = "login.php";

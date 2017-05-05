@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class Catalog_fragment extends Fragment implements View.OnClickListener {
+public class CatalogFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
 
-    public Catalog_fragment() {
+    public CatalogFragment() {
 
     }
 

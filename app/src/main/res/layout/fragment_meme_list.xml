@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="group3.tcss450.uw.edu.thememebible.Photo_fragment"
+    tools:context="group3.tcss450.uw.edu.thememebible.PhotoFragment"
     tools:listitem="@layout/fragment_meme" />

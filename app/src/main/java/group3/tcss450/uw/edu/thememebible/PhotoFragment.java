@@ -38,7 +38,7 @@ import com.squareup.picasso.Picasso;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Photo_fragment extends Fragment {
+public class PhotoFragment extends Fragment {
 
     /** list of photos. */
     private List<Photo> mPhoto;
@@ -47,8 +47,7 @@ public class Photo_fragment extends Fragment {
     /**list of memes from API */
     private List<Meme> mMemes;
     private static final String TAG = "MEME FRAGMENT";
-    private static final String API_KEY =
-            "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
+    private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
     //hardcode for now.
     private String mUser = "yellowbears";
     private String mPass = "nomnomnom2";
@@ -61,9 +60,7 @@ public class Photo_fragment extends Fragment {
     /**different links for different searches.*/
     private final String mLink = "http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12";
 
-
-
-    public Photo_fragment() {
+    public PhotoFragment() {
         // Required empty public constructor
     }
 
