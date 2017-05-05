@@ -3,8 +3,10 @@ package group3.tcss450.uw.edu.thememebible;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -29,14 +32,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import MemeObject.Meme;
+import com.squareup.picasso.Picasso;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Photo_fragment extends Fragment {
 
+    /** list of photos. */
     private List<Photo> mPhoto;
+    /** RecyclerView */
     private RecyclerView rv;
+    /**list of memes from API */
+    private List<Meme> mMemes;
     private static final String TAG = "MEME FRAGMENT";
     private static final String API_KEY =
             "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
@@ -46,6 +55,8 @@ public class Photo_fragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 3;
+
+    private ImageView mItemImage;
 
     /**different links for different searches.*/
     private final String mLink = "http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12";
@@ -65,10 +76,22 @@ public class Photo_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        /** to avoid network on mainthread exception
+         * http://stackoverflow.com/questions/25093546/android-os-networkonmainthreadexception-at-android-os-strictmodeandroidblockgua*/
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //your codes here
 
+        }
 
+        
         View v = inflater.inflate(R.layout.fragment_meme_list, container, false);
 
+        mItemImage = (ImageView) v.findViewById(R.id.item_image);
         if(v instanceof RecyclerView){
             Context context = v.getContext();
             rv = (RecyclerView) v;
@@ -86,14 +109,9 @@ public class Photo_fragment extends Fragment {
         }
 
 
-        //rv = (RecyclerView) v.findViewById(R.id.recyclerView);
-        //LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        //llm.setOrientation(LinearLayoutManager.VERTICAL);
-        //rv.setLayoutManager(llm);
 
 
-        initializeData();
-        initializeAdapter();
+
 
         rv.setHasFixedSize(true);
 
@@ -103,17 +121,52 @@ public class Photo_fragment extends Fragment {
         task.execute(url, "Downloading photos!");
         Log.e("URL", url);
 
+
         return v;
     }
 
+    /**
+     * Put all of our pictures in here.
+     */
     private void initializeData(){
         mPhoto = new ArrayList<>();
-        mPhoto.add(new Photo(R.drawable.cropped_doge));
-       mPhoto.add(new Photo(R.drawable.cropped_doge));
-        mPhoto.add(new Photo(R.drawable.cropped_doge));
-        mPhoto.add(new Photo(R.drawable.cropped_doge));
-        mPhoto.add(new Photo(R.drawable.cropped_doge));
+        Log.e("Meme size" , "" + mMemes.size());
 
+        for(int i = 0 ; i < mMemes.size(); i++)
+        {
+            Log.e("Meme Url" , "" + mMemes.get(i).getmUrl() );
+            Drawable d = LoadImageFromWebOperations(mMemes.get(i).getmUrl());
+            if(d != null)
+            mPhoto.add(new Photo((Drawable)d));
+
+            //Photo m = (Photo) Picasso.with(getContext()).load(mMemes.get(i).getmUrl()); //.into(mItemImage);
+           // mPhoto.add(new Photo(LoadImageFromWebOperations(mMemes.get(i).getmUrl())));
+
+        }
+        //mPhoto.add(new Photo(R.drawable.cropped_doge));
+      // mPhoto.add(new Photo(R.drawable.cropped_doge));
+       // mPhoto.add(new Photo(R.drawable.cropped_doge));
+       // mPhoto.add(new Photo(R.drawable.cropped_doge));
+      //  mPhoto.add(new Photo(R.drawable.cropped_doge));
+
+    }
+
+
+    /**
+     * COnverting url into a drawable object.
+     * @param url of the picture
+     * @return drawable object of the picture.
+     * source: http://stackoverflow.com/questions/6407324/how-to-display-image-from-url-on-android
+     */
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            Log.e("Cannot draw: ",  e.toString());
+            return null;
+        }
     }
 
     private void initializeAdapter(){
@@ -193,7 +246,7 @@ public class Photo_fragment extends Fragment {
             }
 
 
-            List<Meme> list = new ArrayList<Meme>();
+            mMemes = new ArrayList<Meme>();
 
             Bundle args = new Bundle();
             //args.putString("Random Setlist", result);
@@ -206,14 +259,14 @@ public class Photo_fragment extends Fragment {
                 for(int i =0 ; i < obj.length(); i++)
                 {
                     JSONObject object = obj.getJSONObject(i);
-                    list.add(Meme.getMeme(object));
+                    mMemes.add(Meme.getMeme(object));
                 }
 
                 String size = "" + obj.length();
                 Log.e("TopTEN ", obj.toString());
                 Log.e("LENGTH", size);
 
-                Log.e("holy " , list.toString());
+                Log.e("holy " , mMemes.toString());
 
                 //args.putSerializable("Array", list);
 
@@ -227,9 +280,25 @@ public class Photo_fragment extends Fragment {
             Log.d(TAG, result);
 
 
-            // Geocoder geocoder;
-            //geocoder = new Geocoder(getContext(), Locale.getDefault());
+            //initializeData();
 
+            mPhoto = new ArrayList<>();
+            Log.e("Meme size" , "" + mMemes.size());
+
+            for(int i = 0 ; i < mMemes.size(); i++)
+            {
+                Log.e("Meme Url" , "" + mMemes.get(i).getmUrl() );
+                Drawable d = LoadImageFromWebOperations(mMemes.get(i).getmUrl());
+                if(d != null)
+                    mPhoto.add(new Photo((Drawable)d));
+
+                //Photo m = (Photo) Picasso.with(getContext()).load(mMemes.get(i).getmUrl()); //.into(mItemImage);
+                // mPhoto.add(new Photo(LoadImageFromWebOperations(mMemes.get(i).getmUrl())));
+
+            }
+            initializeAdapter();
+
+            
             //Add the trip items to the view
             //mRecyclerView.setAdapter(new MemeBrowserRecyclerViewAdapter(list));
 
