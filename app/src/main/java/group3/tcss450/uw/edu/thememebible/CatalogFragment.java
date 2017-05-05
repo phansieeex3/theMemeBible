@@ -1,15 +1,38 @@
 package group3.tcss450.uw.edu.thememebible;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
 
 public class CatalogFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
+    private static final String TAG = "CATALOGFRAGMENT";
+    private static final String mUrl = "http://version1.api.memegenerator.net/Generators_Select_ByTrending?=";
+    private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
+
+    private ArrayList<String> mTrendingAutoComplete;
 
     public CatalogFragment() {
 
@@ -18,8 +41,38 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_catalog_fragment, container, false);
+                             Bundle savedInstanceState)
+    {
+
+                View v = inflater.inflate(R.layout.fragment_catalog_fragment, container, false);
+        AsyncTask<String, Void, String> task = new DownloadData();
+        mTrendingAutoComplete = new ArrayList<String>();
+
+
+        //populating my auto complete will clean up later.
+        StringBuilder sb = new StringBuilder(mUrl);
+        try {
+            sb.append("&apiKey=");
+            sb.append(URLEncoder.encode(API_KEY, "UTF-8"));
+
+            Log.i("buildString", sb.toString());
+
+        } catch (Exception e) {
+            Log.e("Catch", e.getMessage());
+            Toast.makeText(getActivity(), "url is not correct" + e.getMessage(),
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
+
+        task.execute(sb.toString(), "trending");
+
+
+        ArrayAdapter<String> adapter =
+            new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, mTrendingAutoComplete);
+        AutoCompleteTextView text = (AutoCompleteTextView) v.findViewById(R.id.search_auto_complete);
+        text.setAdapter(adapter);
+
+
 
         // add listeners for the buttons and inflate the view for InitialFragment
         Button b = (Button) v.findViewById(R.id.catalog_button1);
@@ -81,4 +134,88 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(int buttonID);
     }
+
+    /**
+     * This asynctask fills my auto complete.
+     */
+    private class DownloadData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            String url = urls[0];
+            try {
+                URL urlObject = new URL(url);
+                urlConnection = (HttpURLConnection) urlObject.openConnection();
+                InputStream content = urlConnection.getInputStream();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                String s = "";
+                while ((s = buffer.readLine()) != null) {
+                    response += s;
+                }
+            } catch (Exception e) {
+                response = "Unable to connect, Reason: "
+                        + e.getMessage();
+            } finally {
+                if (urlConnection != null)
+                    urlConnection.disconnect();
+            }
+            return response; }
+
+        /**
+         * We retrieve data only until there are 10 trip items in the view, if there are any more
+         * trips that need to be retrieved from the database, then the earliest trips are deleted while
+         * the latest trips are kept, only dipslaying the previous 10 trips.
+         *
+         * @param result String
+         */
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(TAG, result);
+            // Something wrong with the network or the URL.
+            if (result.startsWith("Unable to")) {
+                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+
+
+
+            try {
+
+                ArrayList<Meme> mMemes = new ArrayList<Meme>();
+
+                //parse in the objects.
+                JSONArray obj = new JSONObject(result).getJSONArray("result");
+                Meme m = new Meme();
+                for(int i =0 ; i < obj.length(); i++)
+                {
+                    JSONObject object = obj.getJSONObject(i);
+                    mMemes.add(Meme.getMeme(object));
+                }
+
+
+                //populating my autocomplete string array.
+                for(int i = 0; i < mMemes.size(); i++)
+                {
+                    mTrendingAutoComplete.add(mMemes.get(i).getmDisplayName());
+                    Log.e(TAG, mTrendingAutoComplete.get(i));
+                }
+
+                Log.e("holy " , mMemes.toString());
+
+
+
+            }catch (Throwable t){
+                Log.e("TAG", "Could not parse malformed JSON: " + t.toString());
+            }
+
+            Log.d(TAG, result);
+
+
+
+        }
+    }
+
 }
