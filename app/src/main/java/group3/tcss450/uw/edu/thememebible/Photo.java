@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 /**
  * Created by Vu Hoang on 4/30/2017.
+ * For holding the image in a drawable.
  */
 
 public class Photo  {

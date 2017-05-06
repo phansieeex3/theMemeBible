@@ -1,10 +1,9 @@
-package group3.tcss450.uw.edu.thememebible.Model;
+package group3.tcss450.uw.edu.thememebible.Utility;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,11 +15,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
 import group3.tcss450.uw.edu.thememebible.CatalogFragment;
-import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
-import group3.tcss450.uw.edu.thememebible.PhotoFragment;
+import group3.tcss450.uw.edu.thememebible.Model.Meme;
 
 /**
  * @author Phansa Chaonpoj

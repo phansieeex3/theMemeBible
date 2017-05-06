@@ -1,4 +1,4 @@
-package group3.tcss450.uw.edu.thememebible.MemeObject;
+package group3.tcss450.uw.edu.thememebible.Model;
 
 import android.util.Log;
 
@@ -11,7 +11,6 @@ import java.io.Serializable;
  * Created by Phansa Chaonpoj on 5/3/17.
  * This is the Meme Object.
  */
-
 public class Meme implements Serializable
 {
     private static final String TAG = "Meme Class";

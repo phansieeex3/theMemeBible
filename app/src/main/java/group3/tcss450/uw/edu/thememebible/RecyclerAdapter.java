@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 /**
- * Created by Vu Hoang on 4/30/2017.
+ * An adapter implementation to support the RecyclerView for the PhotoFragment.
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoHolder> {
     private List<Photo> mPhotos;

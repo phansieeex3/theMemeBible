@@ -10,13 +10,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
-import group3.tcss450.uw.edu.thememebible.Model.DownloadData;
+import group3.tcss450.uw.edu.thememebible.Model.Meme;
+import group3.tcss450.uw.edu.thememebible.Utility.DownloadData;
 
-
+/**
+ * The main entry point for the application.
+ */
 public class MainActivity extends AppCompatActivity implements InitialFragment.OnFragmentInteractionListener,
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
-        DisplayFragment.OnFragmentInteractionListener, MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener
+        MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener
 
 
 {

@@ -10,7 +10,6 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,14 +30,11 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.datatype.Duration;
-
-import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
-import group3.tcss450.uw.edu.thememebible.Model.DownloadData;
+import group3.tcss450.uw.edu.thememebible.Model.Meme;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Displays images retrieved via the Meme Generator Web API.
  */
 public class PhotoFragment extends Fragment   {
 
@@ -48,7 +44,7 @@ public class PhotoFragment extends Fragment   {
     private RecyclerView rv;
     /**list of memes from API */
     private List<Meme> mMemes;
-    private static final String TAG = "MEME FRAGMENT";
+    private static final String TAG = "PhotoFragment";
     private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
     private String mQuery;
 

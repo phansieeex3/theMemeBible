@@ -24,8 +24,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
+import group3.tcss450.uw.edu.thememebible.Model.Meme;
 
+/**
+ * The catalog fragment for selecting different categories.
+ */
 public class CatalogFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     private static final String TAG = "CATALOGFRAGMENT";
