@@ -39,7 +39,7 @@ public class Meme implements Serializable
     /*TotalVotesSum*/
     private int mTotalVotesSum;
     /*userID*/
-    private int mUserID;
+    private String mUserID;
     /*userVoteScore*/
     private int mUserVoteScore;
 
@@ -71,7 +71,7 @@ public class Meme implements Serializable
             m.mEntityName = entity.getString("entityName");
             m.mEntityID = entity.getInt("entityID");
             m.mTotalVotesSum = entity.getInt("totalVotesSum");
-            m.mUserID = entity.getInt("userID");
+            m.mUserID = entity.getString("userID");
             m.mUserVoteScore = entity.getInt("userVoteScore");
 
 
@@ -122,7 +122,7 @@ public class Meme implements Serializable
         return mTotalVotesSum;
     }
 
-    public int getmUserID() {
+    public String getmUserID() {
         return mUserID;
     }
 

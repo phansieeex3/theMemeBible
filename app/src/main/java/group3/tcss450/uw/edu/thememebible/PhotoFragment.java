@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
+import group3.tcss450.uw.edu.thememebible.Model.DownloadData;
 
 
 /**
@@ -56,11 +57,13 @@ public class PhotoFragment extends Fragment {
     private ImageView mItemImage;
 
     /**different links for different searches.*/
-    private final String mLink = "http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12";
+    private String mLink = "http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12";
+
 
     public PhotoFragment() {
-        // Required empty public constructor
+
     }
+
 
 
 
@@ -71,6 +74,7 @@ public class PhotoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        //mMemes = new ArrayList<Meme>();
         /** to avoid network on mainthread exception
          * http://stackoverflow.com/questions/25093546/android-os-networkonmainthreadexception-at-android-os-strictmodeandroidblockgua*/
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -110,10 +114,22 @@ public class PhotoFragment extends Fragment {
 
         rv.setHasFixedSize(true);
 
-        AsyncTask<String, Void, String> task = new DownloadPhotos();
+
         String url = buildUrl("", "");
+
+        DownloadData task = new DownloadData(url);
+
         task.execute(url, "Downloading photos!");
-        Log.e("URL", url);
+
+
+        if(task.getStatus().FINISHED.equals(AsyncTask.Status.FINISHED)){
+            mMemes = new ArrayList<Meme>(task.getmMemes());
+            Log.e("Meme size", ""+ mMemes.size());
+            initializeData();
+            initializeAdapter();
+            Log.e("URL", url);
+        }
+
 
 
         return v;

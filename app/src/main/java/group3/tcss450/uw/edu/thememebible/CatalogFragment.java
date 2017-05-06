@@ -116,6 +116,9 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
                 case R.id.catalog_button3:
                     mListener.onFragmentInteraction(v.getId());
                     break;
+                case R.id.search_button:
+                    mListener.onFragmentInteraction(v.getId());
+                    break;
             }
         }
     }
@@ -164,9 +167,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
             return response; }
 
         /**
-         * We retrieve data only until there are 10 trip items in the view, if there are any more
-         * trips that need to be retrieved from the database, then the earliest trips are deleted while
-         * the latest trips are kept, only dipslaying the previous 10 trips.
+         * Parse the data into a string array.
          *
          * @param result String
          */
