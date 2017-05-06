@@ -38,7 +38,7 @@ import group3.tcss450.uw.edu.thememebible.Model.DownloadData;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PhotoFragment extends Fragment {
+public class PhotoFragment extends Fragment implements View.OnClickListener  {
 
     /** list of photos. */
     private List<Photo> mPhoto;
@@ -55,6 +55,9 @@ public class PhotoFragment extends Fragment {
     // TODO: Customize parameters
     private static final int COLUMN_COUNT = 3;
     private ImageView mItemImage;
+    /**for our search api. */
+    private String mSearch;
+
 
     /**different links for different searches.*/
     private String mLink = "http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12";
@@ -64,9 +67,13 @@ public class PhotoFragment extends Fragment {
 
     }
 
-
-
-
+    /**
+     * setting for my Memes
+     * @param mMemes
+     */
+    public void setmMemes(List<Meme> mMemes) {
+        this.mMemes = mMemes;
+    }
 
     @Nullable
     @Override
@@ -90,6 +97,7 @@ public class PhotoFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_meme_list, container, false);
 
         mItemImage = (ImageView) v.findViewById(R.id.item_image);
+
         if(v instanceof RecyclerView){
             Context context = v.getContext();
             rv = (RecyclerView) v;
@@ -129,7 +137,7 @@ public class PhotoFragment extends Fragment {
             initializeData();
             initializeAdapter();
             Log.e("URL", url);
-        //}
+
 
 
 
@@ -145,8 +153,8 @@ public class PhotoFragment extends Fragment {
 
         for(int i = 0 ; i < mMemes.size(); i++)
         {
-            Log.e("Meme Url" , "" + mMemes.get(i).getmUrl() );
-            Drawable d = LoadImageFromWebOperations(mMemes.get(i).getmUrl());
+            Log.e("Meme Url" , "" + mMemes.get(i).getmImageUrl() );
+            Drawable d = LoadImageFromWebOperations(mMemes.get(i).getmImageUrl());
             if(d != null)
             mPhoto.add(new Photo((Drawable)d));
 
@@ -203,6 +211,12 @@ public class PhotoFragment extends Fragment {
         }
         return sb.toString();
     }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
 
     /**
      * an Async class that retrieves data from the database.

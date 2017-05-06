@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
+import group3.tcss450.uw.edu.thememebible.Model.DownloadData;
+
 
 public class MainActivity extends AppCompatActivity implements InitialFragment.OnFragmentInteractionListener,
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
@@ -19,8 +22,10 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 {
     private static final String TAG = "MainActivity";
     protected static final String PARTIAL_URL = "http://thememebible.ddns.net/app/app_";
+    protected static final String SEARCH_API = "http://version1.api.memegenerator.net/Instances_Search?q=insanity&pageIndex=0&pageSize=12";
     private Bundle mLoginArgs;
     private Bundle mRegisterArgs;
+    private String mSearch;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     @Override
     public void onFragmentInteraction(int buttonID) {
 
+        DownloadData data;
+        ArrayList<Meme> memeList = new ArrayList<Meme>();
         // handle different buttonIDs
         switch(buttonID) {
             case R.id.btnLogin: // from InitialFragment
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.btnRegisterUser: // from RegisterFragment
-                Toast.makeText(this, "Thanks for registering!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thanks for registering!", Toast.LENGTH_SHORT).show();//cute
                 loadFragment(new MainMenuFragment());
                 break;
 
@@ -85,10 +92,24 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.catalog_button1: // from CatalogFragment
-                loadFragment(new PhotoFragment());
+                loadFragment(new PhotoFragment()); //should be able to pass some strings.
 
                 //send type of  catalog string.
                 break;
+
+            case R.id.search_button:
+
+                //set async task DownloadData
+                data = new DownloadData(SEARCH_API);
+                //call from task - getListofMemes
+                memeList = data.getmMemes();
+                PhotoFragment f = new PhotoFragment();
+                f.setmMemes(memeList);
+                //pass into Photofragment to parse and display!
+                loadFragment(f);
+                break;
+
+
         }
     }
 
@@ -115,6 +136,18 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     @Override
     public void getLogin(Bundle args) {
         mLoginArgs = args;
+    }
+
+    //callback for our CatalogFragment.
+
+    /**
+     * Sets the query for our search.
+     * @param args
+     */
+    @Override
+    public void setSearch(String args)
+    {
+        mSearch = args;
     }
 
 

@@ -3,6 +3,7 @@ package group3.tcss450.uw.edu.thememebible.Model;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -17,6 +18,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import group3.tcss450.uw.edu.thememebible.CatalogFragment;
 import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
 
 /**
@@ -27,9 +29,11 @@ import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
  *
  */
 
-public class DownloadData extends  AsyncTask<String, Void, String> {
+public class DownloadData extends  AsyncTask<String, Void, String> implements View.OnClickListener {
     /**list of memes from API */
     private ArrayList<Meme> mMemes;
+    /**Onlistener */
+    private CatalogFragment.OnFragmentInteractionListener mListener;
     /** Link for the api.*/
     private String mLink;
     /**API KEY */
@@ -165,5 +169,10 @@ public class DownloadData extends  AsyncTask<String, Void, String> {
      *  */
     public ArrayList<Meme> getmMemes() {
         return new ArrayList<>(mMemes);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

@@ -81,6 +81,11 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
         b.setOnClickListener(this);
         b = (Button) v.findViewById(R.id.catalog_button3);
         b.setOnClickListener(this);
+        b = (Button) v.findViewById(R.id.search_button);
+        b.setOnClickListener(this);
+
+
+
         return v;
 
     }
@@ -116,7 +121,10 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
                 case R.id.catalog_button3:
                     mListener.onFragmentInteraction(v.getId());
                     break;
-                case R.id.search_button:
+                case R.id.search_button: //putting in my query.
+                    AutoCompleteTextView search = (AutoCompleteTextView) getActivity().findViewById(R.id.search_auto_complete);
+                    String query = search.getText().toString();
+                    mListener.setSearch(query);
                     mListener.onFragmentInteraction(v.getId());
                     break;
             }
@@ -136,6 +144,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(int buttonID);
+        void setSearch(String search);
     }
 
     /**
