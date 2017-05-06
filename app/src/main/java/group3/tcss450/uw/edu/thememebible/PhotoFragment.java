@@ -117,18 +117,19 @@ public class PhotoFragment extends Fragment {
 
         String url = buildUrl("", "");
 
-        DownloadData task = new DownloadData(url);
+         //DownloadData task = new DownloadData(url);
+        AsyncTask<String, Void, String> task = new DownloadPhotos();
+        task.execute(url, "downloading photos");
+       // task.execute(url, "Downloading photos!");
 
-        task.execute(url, "Downloading photos!");
-
-
-        if(task.getStatus().FINISHED.equals(AsyncTask.Status.FINISHED)){
-            mMemes = new ArrayList<Meme>(task.getmMemes());
+        mMemes = new ArrayList<Meme>();
+       // if(task.getStatus().FINISHED.equals(AsyncTask.Status.FINISHED)){
+          //  mMemes = new ArrayList<Meme>(task.getmMemes());
             Log.e("Meme size", ""+ mMemes.size());
             initializeData();
             initializeAdapter();
             Log.e("URL", url);
-        }
+        //}
 
 
 

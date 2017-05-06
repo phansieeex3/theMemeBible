@@ -109,9 +109,7 @@ public class DownloadData extends  AsyncTask<String, Void, String> {
         return response; }
 
     /**
-     * We retrieve data only until there are 10 trip items in the view, if there are any more
-     * trips that need to be retrieved from the database, then the earliest trips are deleted while
-     * the latest trips are kept, only dipslaying the previous 10 trips.
+     *
      *
      * @param result String
      */
