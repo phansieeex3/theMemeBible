@@ -22,11 +22,13 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 {
     private static final String TAG = "MainActivity";
     protected static final String PARTIAL_URL = "http://thememebible.ddns.net/app/app_";
-    protected static final String SEARCH_API = "http://version1.api.memegenerator.net/Instances_Search?q=insanity&pageIndex=0&pageSize=12";
+    protected static final String SEARCH_API = "http://version1.api.memegenerator.net/Instances_Search?&pageIndex=0&pageSize=12";
+    protected static final String POPULAR_API = "http://version1.api.memegenerator.net/Generators_Select_ByPopular?pageIndex=0&pageSize=12&days=";
     private Bundle mLoginArgs;
     private Bundle mRegisterArgs;
     private String mSearch;
     private RecyclerView mRecyclerView;
+    private ArrayList<Meme> mMemeList;
     private RecyclerAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
     private ArrayList<Photo> mPhotosList;
@@ -57,12 +59,17 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 //    }
 
 
+    @Override
+    public void setMemeList(ArrayList<Meme> list) {
+        mMemeList = new ArrayList<Meme>(list);
+    }
 
     // implements all button press callbacks from other Fragments
     @Override
     public void onFragmentInteraction(int buttonID) {
 
         DownloadData data;
+        PhotoFragment f;
         ArrayList<Meme> memeList = new ArrayList<Meme>();
         // handle different buttonIDs
         switch(buttonID) {
@@ -92,19 +99,23 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.catalog_button1: // from CatalogFragment
-                loadFragment(new PhotoFragment()); //should be able to pass some strings.
+                f = new PhotoFragment();
+                f.setmLink(POPULAR_API);
+                loadFragment(f); //should be able to pass some strings.
 
                 //send type of  catalog string.
                 break;
 
             case R.id.search_button:
 
-                //set async task DownloadData
+                //set async task DownloadData does not work.
                 data = new DownloadData(SEARCH_API);
+                data.setmQuery(mSearch);
                 //call from task - getListofMemes
                 memeList = data.getmMemes();
-                PhotoFragment f = new PhotoFragment();
-                f.setmMemes(memeList);
+                f = new PhotoFragment();
+                f.setmLink(SEARCH_API);
+                f.setmQuery(mSearch);
                 //pass into Photofragment to parse and display!
                 loadFragment(f);
                 break;

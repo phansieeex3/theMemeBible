@@ -31,6 +31,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.datatype.Duration;
+
 import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
 import group3.tcss450.uw.edu.thememebible.Model.DownloadData;
 
@@ -38,7 +40,7 @@ import group3.tcss450.uw.edu.thememebible.Model.DownloadData;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PhotoFragment extends Fragment implements View.OnClickListener  {
+public class PhotoFragment extends Fragment   {
 
     /** list of photos. */
     private List<Photo> mPhoto;
@@ -48,6 +50,12 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
     private List<Meme> mMemes;
     private static final String TAG = "MEME FRAGMENT";
     private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
+    private String mQuery;
+
+    public void setmQuery(String mQuery) {
+        this.mQuery = mQuery;
+    }
+
     //hardcode for now.
     private String mUser = "phansac";
     private String mPass = "nomnomnom2";
@@ -59,6 +67,8 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
     private String mSearch;
 
 
+
+
     /**different links for different searches.*/
     private String mLink = "http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12";
 
@@ -67,12 +77,9 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
 
     }
 
-    /**
-     * setting for my Memes
-     * @param mMemes
-     */
-    public void setmMemes(List<Meme> mMemes) {
-        this.mMemes = mMemes;
+
+    public void setmLink(String mLink) {
+        this.mLink = mLink;
     }
 
     @Nullable
@@ -81,7 +88,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        //mMemes = new ArrayList<Meme>();
+        mMemes = new ArrayList<Meme>();
         /** to avoid network on mainthread exception
          * http://stackoverflow.com/questions/25093546/android-os-networkonmainthreadexception-at-android-os-strictmodeandroidblockgua*/
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -118,25 +125,12 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
 
 
 
-
-
         rv.setHasFixedSize(true);
-
-
-        String url = buildUrl("", "");
-
-         //DownloadData task = new DownloadData(url);
+        //for the search.....
+        String url = buildUrl(mLink);
         AsyncTask<String, Void, String> task = new DownloadPhotos();
         task.execute(url, "downloading photos");
-       // task.execute(url, "Downloading photos!");
 
-        mMemes = new ArrayList<Meme>();
-       // if(task.getStatus().FINISHED.equals(AsyncTask.Status.FINISHED)){
-          //  mMemes = new ArrayList<Meme>(task.getmMemes());
-            Log.e("Meme size", ""+ mMemes.size());
-            initializeData();
-            initializeAdapter();
-            Log.e("URL", url);
 
 
 
@@ -149,11 +143,11 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
      */
     private void initializeData(){
         mPhoto = new ArrayList<>();
-        Log.e("Meme size" , "" + mMemes.size());
+        Log.e("Meme size" + TAG, "" + mMemes.size());
 
         for(int i = 0 ; i < mMemes.size(); i++)
         {
-            Log.e("Meme Url" , "" + mMemes.get(i).getmImageUrl() );
+            Log.e(TAG, "" + mMemes.get(i).getmImageUrl() );
             Drawable d = LoadImageFromWebOperations(mMemes.get(i).getmImageUrl());
             if(d != null)
             mPhoto.add(new Photo((Drawable)d));
@@ -190,16 +184,21 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
 
     /**
      * This method helps append the url.
-     *@param username of the user.
-     *@param password of the user.
+
      * @return a String url.
      */
-    private String buildUrl(String username, String password) {
+    private String buildUrl(String link) {
 
-        StringBuilder sb = new StringBuilder(mLink);
+        StringBuilder sb = new StringBuilder(link);
         try {
             sb.append("&apiKey=");
             sb.append(URLEncoder.encode(API_KEY, "UTF-8"));
+
+            if(mQuery!=null) //check if search query then build the string.
+            {
+                sb.append("&q=");
+                sb.append(URLEncoder.encode(mQuery, "UTF-8"));
+            }
 
             Log.i("buildString", sb.toString());
 
@@ -212,10 +211,6 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
         return sb.toString();
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 
 
     /**
@@ -283,6 +278,11 @@ public class PhotoFragment extends Fragment implements View.OnClickListener  {
 
 
                 Log.e("holy " , mMemes.toString());
+
+                if(mMemes.isEmpty())
+                {
+                    Toast.makeText(getContext(), "Sorry cant find anything :/", Toast.LENGTH_LONG).show();
+                }
 
 
 

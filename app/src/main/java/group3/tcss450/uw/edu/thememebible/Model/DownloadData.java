@@ -20,6 +20,7 @@ import java.util.List;
 
 import group3.tcss450.uw.edu.thememebible.CatalogFragment;
 import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
+import group3.tcss450.uw.edu.thememebible.PhotoFragment;
 
 /**
  * @author Phansa Chaonpoj
@@ -45,6 +46,8 @@ public class DownloadData extends  AsyncTask<String, Void, String> implements Vi
     /**TAG */
     private static final String TAG = "DownloadData";
 
+    /**Query */
+    private String mQuery;
 
 
     /** Default constructor for data that does not need username and password.*/
@@ -62,26 +65,34 @@ public class DownloadData extends  AsyncTask<String, Void, String> implements Vi
         mPassword = password;
         mMemes = new ArrayList<Meme>();
         mLink = link;
+        mQuery = null;
 
 
     }
+
+    public void setmQuery(String mQuery) {
+        this.mQuery = mQuery;
+    }
+
     /**
      * This method helps append the url.
-     *@param username of the user.
-     *@param password of the user.
      * @return a String url.
      */
-    public String buildUrl(String username, String password, String command) {
+
+    public String buildUrl(String command, String query) {
 
         StringBuilder sb = new StringBuilder(mLink);
         try {
             sb.append("&apiKey=");
             sb.append(URLEncoder.encode(API_KEY, "UTF-8"));
 
-           // sb.append(command);
-            //sb.append(URLEncoder.encode(API_KEY, "UTF-8"));
+          if(mQuery!=null) //check if search query then build the string.
+          {
+              sb.append("&q=");
+              sb.append(URLEncoder.encode(mQuery, "UTF-8"));
+          }
 
-            Log.i("buildString", sb.toString());
+            Log.i(TAG, sb.toString());
 
         } catch (Exception e) {
             Log.e("Catch", e.getMessage());
@@ -111,6 +122,10 @@ public class DownloadData extends  AsyncTask<String, Void, String> implements Vi
                 urlConnection.disconnect();
         }
         return response; }
+
+    public void setmMemes(ArrayList<Meme> mMemes) {
+        this.mMemes = mMemes;
+    }
 
     /**
      *
@@ -145,14 +160,17 @@ public class DownloadData extends  AsyncTask<String, Void, String> implements Vi
 
 
 
+
+//            mListener.setMemeList(mMemes);
+
             //Log.e("holy " , mMemes.toString());
             ArrayList<Meme> test = new ArrayList<>(mMemes);
-            Log.e("TESTTT" , test.toString());
+            Log.e(TAG , test.toString());
 
 
 
         }catch (Throwable t){
-            Log.e("TAG", "Could not parse malformed JSON: " + t.toString());
+            Log.e(TAG, "Could not parse malformed JSON: " + t.toString());
         }
 
         Log.d(TAG, result);
@@ -173,6 +191,7 @@ public class DownloadData extends  AsyncTask<String, Void, String> implements Vi
 
     @Override
     public void onClick(View v) {
+
 
     }
 }

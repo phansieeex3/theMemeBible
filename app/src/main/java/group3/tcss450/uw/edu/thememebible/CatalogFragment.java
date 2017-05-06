@@ -29,8 +29,10 @@ import group3.tcss450.uw.edu.thememebible.MemeObject.Meme;
 public class CatalogFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     private static final String TAG = "CATALOGFRAGMENT";
-    private static final String mUrl = "http://version1.api.memegenerator.net/Generators_Select_ByTrending?=";
+    private static final String mUrl = "http://version1.api.memegenerator.net/Generators_Select_ByPopular?pageIndex=0&pageSize=12&days=12";
     private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
+
+    private ArrayList<Meme> mMemelist;
 
     private ArrayList<String> mTrendingAutoComplete;
 
@@ -48,6 +50,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
         AsyncTask<String, Void, String> task = new DownloadData();
         mTrendingAutoComplete = new ArrayList<String>();
 
+        mMemelist = new ArrayList<Meme>();
 
         //populating my auto complete will clean up later.
         StringBuilder sb = new StringBuilder(mUrl);
@@ -142,7 +145,8 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
+        void setMemeList(ArrayList<Meme> list);
         void onFragmentInteraction(int buttonID);
         void setSearch(String search);
     }
