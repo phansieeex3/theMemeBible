@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class Meme implements Serializable
 {
-    private static final String TAG = "MEME CLASS";
+    private static final String TAG = "Meme Class";
     /*generatorID*/
     private int mGeneratorID;
     /*imageID*/
@@ -26,12 +26,15 @@ public class Meme implements Serializable
     /*totalVotesScore*/
     private int mTotalVotesScore;
     /*instancesCount*/
-    private int mInstanceCount;
+    private int mInstancesCount;
     /*ranking*/
     private int mRanking;
 
     /*imageUrl*/
-    private String mUrl;
+    private String mImageUrl;
+
+    private JSONObject mEntityVotesSummary;
+
     /*entityName*/
     private String mEntityName;
     /*entityID*/
@@ -41,7 +44,16 @@ public class Meme implements Serializable
     /*userID*/
     private String mUserID;
     /*userVoteScore*/
-    private int mUserVoteScore;
+    private String mUserVoteScore;
+
+    private int mInstanceID;
+    private String mText0;
+    private String mText1;
+    private int mCommentsCount;
+    private String mMgUserID;
+    private String mUsername;
+    private String mInstanceImageUrl; // has the caption
+    private String mInstanceUrl;
 
     /* Empty Constructor */
     public Meme(){}
@@ -55,28 +67,56 @@ public class Meme implements Serializable
 
         try {
 
-            m.mGeneratorID = meme.getInt("generatorID");
-            m.mImageID = meme.getInt("imageID");
-            m.mDisplayName = meme.getString("displayName");
-            m.mUrlName = meme.getString("urlName");
-            m.mTotalVotesScore = meme.getInt("totalVotesScore");
-            m.mInstanceCount = meme.getInt("instancesCount");
-            m.mRanking = meme.getInt("ranking");
-            //this is another object that contatins other information.
-            m.mUrl = meme.getString("imageUrl");
+            if (meme.has("generatorID"))
+                m.mGeneratorID = meme.getInt("generatorID");
+            if (meme.has("imageID"))
+                m.mImageID = meme.getInt("imageID");
+            if (meme.has("displayName"))
+                m.mDisplayName = meme.getString("displayName");
+            if (meme.has("urlName"))
+                m.mUrlName = meme.getString("urlName");
+            if (meme.has("totalVotesScore"))
+                m.mTotalVotesScore = meme.getInt("totalVotesScore");
+            if (meme.has("instancesCount"))
+                m.mInstancesCount = meme.getInt("instancesCount");
+            if (meme.has("ranking"))
+                m.mRanking = meme.getInt("ranking");
+            if (meme.has("imageUrl"))
+                m.mImageUrl = meme.getString("imageUrl");
 
-            //parse through the object so that it shows to entityVotesSummary
-            JSONObject entity = meme.getJSONObject("entityVotesSummary");
+            // handle entity votes summary JSONObject separately
+            if (meme.has("entityVotesSummary")) {
+                m.mEntityVotesSummary = meme.getJSONObject("entityVotesSummary");
 
-            m.mEntityName = entity.getString("entityName");
-            m.mEntityID = entity.getInt("entityID");
-            m.mTotalVotesSum = entity.getInt("totalVotesSum");
-            m.mUserID = entity.getString("userID");
-            m.mUserVoteScore = entity.getInt("userVoteScore");
+                if (m.mEntityVotesSummary.has("entityName"))
+                    m.mEntityName = m.mEntityVotesSummary.getString("entityName");
+                if (m.mEntityVotesSummary.has("entityID"))
+                    m.mEntityID = m.mEntityVotesSummary.getInt("entityID");
+                if (m.mEntityVotesSummary.has("totalVotesSum"))
+                    m.mTotalVotesSum = m.mEntityVotesSummary.getInt("totalVotesSum");
+                if (m.mEntityVotesSummary.has("userID"))
+                    m.mUserID = m.mEntityVotesSummary.getString("userID");
+                if (m.mEntityVotesSummary.has("userVoteScore"))
+                    m.mUserVoteScore = m.mEntityVotesSummary.getString("userVoteScore");
+            }
 
-
-
-
+            // additional fields for instances search
+            if (meme.has("instanceID"))
+                m.mInstanceID = meme.getInt("instanceID");
+            if (meme.has("text0"))
+                m.mText0 = meme.getString("text0");
+            if (meme.has("text1"))
+                m.mText1 = meme.getString("text1");
+            if (meme.has("commentsCount"))
+                m.mCommentsCount = meme.getInt("commentsCount");
+            if (meme.has("mgUserID"))
+                m.mMgUserID = meme.getString("mgUserID");
+            if (meme.has("username"))
+                m.mUsername = meme.getString("username");
+            if (meme.has("instanceImageUrl"))
+                m.mInstanceImageUrl = meme.getString("instanceImageUrl");
+            if (meme.has("instanceUrl"))
+                m.mInstanceUrl = meme.getString("instanceUrl");
 
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
@@ -84,9 +124,48 @@ public class Meme implements Serializable
 
 
         return m;
-
-
     }
+
+    public String getmUrlName() {
+        return mUrlName;
+    }
+
+    public JSONObject getmEntityVotesSummary() {
+        return mEntityVotesSummary;
+    }
+
+    public int getmInstanceID() {
+        return mInstanceID;
+    }
+
+    public String getmText0() {
+        return mText0;
+    }
+
+    public String getmText1() {
+        return mText1;
+    }
+
+    public int getmCommentsCount() {
+        return mCommentsCount;
+    }
+
+    public String getmMgUserID() {
+        return mMgUserID;
+    }
+
+    public String getmUsername() {
+        return mUsername;
+    }
+
+    public String getmInstanceImageUrl() {
+        return mInstanceImageUrl;
+    }
+
+    public String getmInstanceUrl() {
+        return mInstanceUrl;
+    }
+
     public int getmGeneratorID() {
         return mGeneratorID;
     }
@@ -103,8 +182,8 @@ public class Meme implements Serializable
         return mTotalVotesScore;
     }
 
-    public int getmInstanceCount() {
-        return mInstanceCount;
+    public int getmInstancesCount() {
+        return mInstancesCount;
     }
 
     public int getmRanking() {
@@ -126,7 +205,7 @@ public class Meme implements Serializable
         return mUserID;
     }
 
-    public int getmUserVoteScore() {
+    public String getmUserVoteScore() {
         return mUserVoteScore;
     }
 
@@ -145,13 +224,13 @@ public class Meme implements Serializable
         meme += "ranking:" + mRanking + ", ";
         meme += "entity name :" + mEntityName + ", ";
         meme += "entity id :" + mEntityID + ", ";
-        meme += "url:" + mUrl + "\n";
+        meme += "url:" + mImageUrl + "\n";
         return meme;
     }
 
 
-    public String getmUrl() {
-        return mUrl;
+    public String getmImageUrl() {
+        return mImageUrl;
     }
 
 
