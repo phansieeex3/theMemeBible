@@ -1,7 +1,7 @@
 package group3.tcss450.uw.edu.thememebible.Utility;
 
 /**
- * Static utility class to assist in building URLs for the MemeData AsyncTask.
+ * Static utility class to assist in building URLs for the MemeDataTask AsyncTask.
  *
  * @author Peter Phe
  * @version 1.0
@@ -17,7 +17,6 @@ public final class UrlBuilder {
     private UrlBuilder() {
         // intentionally empty
     }
-
 
     /**
      * Gets the URL for creating a new instance of a stock generator image. generatorID and imageID
@@ -103,6 +102,19 @@ public final class UrlBuilder {
         }
 
         return url + "&days=&" + addAPIKey(); // days parameter can be specified later if we want
+    }
+
+    /**
+     * Gets the URL based on the specified query parameter.
+     *
+     * @param theQuery the generator images to search for
+     * @return the complete Generator_Search URL
+     *
+     * ex. http://version1.api.memegenerator.net/Generators_Search?q=insanity&pageIndex=0
+     * &pageSize=12&apiKey=demo
+     */
+    public static String getGeneratorSearchUrl(String theQuery) {
+        return BASE_URL + "Generators_Search?q=" + theQuery + "&pageIndex=0&pageSize=12&" + addAPIKey();
     }
 
     /**

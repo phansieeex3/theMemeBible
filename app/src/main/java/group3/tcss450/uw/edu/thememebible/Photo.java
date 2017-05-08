@@ -12,19 +12,15 @@ public class Photo  {
     int photoID;
     Drawable mPhotoDraw;
 
-    Photo (int photoID, Drawable draw){
+    Photo (int photoID, Drawable draw) {
         this.photoID = photoID;
-        mPhotoDraw = draw ;
-
+        mPhotoDraw = draw;
     }
 
 
     /**Overloaded constructor */
-    Photo ( Drawable draw){
-        mPhotoDraw = draw ;
-
+    Photo (Drawable draw) {
+        mPhotoDraw = draw;
         photoID = 0;
     }
-
-
 }

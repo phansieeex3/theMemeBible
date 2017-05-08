@@ -8,43 +8,30 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 /**
- * Created by Phansa Chaonpoj on 5/3/17.
- * This is the Meme Object.
+ * The Meme object data model.
+ *
+ * @author Phansa Chaonpoj
+ * @author Peter Phe
+ * @version 1.0
  */
 public class Meme implements Serializable
 {
     private static final String TAG = "Meme Class";
-    /*generatorID*/
+
     private int mGeneratorID;
-    /*imageID*/
     private int mImageID;
-    /*urlName */
     private String mUrlName;
-    /*displayName*/
     private String mDisplayName;
-    /*totalVotesScore*/
     private int mTotalVotesScore;
-    /*instancesCount*/
     private int mInstancesCount;
-    /*ranking*/
     private int mRanking;
-
-    /*imageUrl*/
     private String mImageUrl;
-
     private JSONObject mEntityVotesSummary;
-
-    /*entityName*/
     private String mEntityName;
-    /*entityID*/
     private int mEntityID;
-    /*TotalVotesSum*/
     private int mTotalVotesSum;
-    /*userID*/
     private String mUserID;
-    /*userVoteScore*/
     private String mUserVoteScore;
-
     private int mInstanceID;
     private String mText0;
     private String mText1;
@@ -55,7 +42,7 @@ public class Meme implements Serializable
     private String mInstanceUrl;
 
     /* Empty Constructor */
-    public Meme(){}
+    public Meme() { }
 
     /**
      *@param meme JSONObject of the meme
@@ -121,16 +108,63 @@ public class Meme implements Serializable
             Log.e(TAG, e.getMessage());
         }
 
-
         return m;
+    }
+
+    public int getmGeneratorID() {
+        return mGeneratorID;
+    }
+
+    public int getmImageID() {
+        return mImageID;
     }
 
     public String getmUrlName() {
         return mUrlName;
     }
 
+    public String getmDisplayName() {
+        return mDisplayName;
+    }
+
+    public int getmTotalVotesScore() {
+        return mTotalVotesScore;
+    }
+
+    public int getmInstancesCount() {
+        return mInstancesCount;
+    }
+
+    public int getmRanking() {
+        return mRanking;
+    }
+
+    public String getmImageUrl() {
+        return mImageUrl;
+    }
+
     public JSONObject getmEntityVotesSummary() {
         return mEntityVotesSummary;
+    }
+
+    public String getmEntityName() {
+        return mEntityName;
+    }
+
+    public int getmEntityID() {
+        return mEntityID;
+    }
+
+    public int getmTotalVotesSum() {
+        return mTotalVotesSum;
+    }
+
+    public String getmUserID() {
+        return mUserID;
+    }
+
+    public String getmUserVoteScore() {
+        return mUserVoteScore;
     }
 
     public int getmInstanceID() {
@@ -165,50 +199,6 @@ public class Meme implements Serializable
         return mInstanceUrl;
     }
 
-    public int getmGeneratorID() {
-        return mGeneratorID;
-    }
-
-    public int getmImageID() {
-        return mImageID;
-    }
-
-    public String getmDisplayName() {
-        return mDisplayName;
-    }
-
-    public int getmTotalVotesScore() {
-        return mTotalVotesScore;
-    }
-
-    public int getmInstancesCount() {
-        return mInstancesCount;
-    }
-
-    public int getmRanking() {
-        return mRanking;
-    }
-    public String getmEntityName() {
-        return mEntityName;
-    }
-
-    public int getmEntityID() {
-        return mEntityID;
-    }
-
-    public int getmTotalVotesSum() {
-        return mTotalVotesSum;
-    }
-
-    public String getmUserID() {
-        return mUserID;
-    }
-
-    public String getmUserVoteScore() {
-        return mUserVoteScore;
-    }
-
-
     /** *
      * for testing purposes overriding the toString for this object.
      * @return String that has information about the meme.
@@ -217,20 +207,13 @@ public class Meme implements Serializable
     public String toString(){
         String meme = "";
 
-
         meme += "Display name: " + mDisplayName + ", ";
         meme += "imageID: " + mImageID + ", ";
         meme += "ranking:" + mRanking + ", ";
         meme += "entity name :" + mEntityName + ", ";
         meme += "entity id :" + mEntityID + ", ";
         meme += "url:" + mImageUrl + "\n";
+
         return meme;
     }
-
-
-    public String getmImageUrl() {
-        return mImageUrl;
-    }
-
-
 }

@@ -1,46 +1,49 @@
 package group3.tcss450.uw.edu.thememebible;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import group3.tcss450.uw.edu.thememebible.Model.Meme;
-import group3.tcss450.uw.edu.thememebible.Utility.DownloadData;
+import group3.tcss450.uw.edu.thememebible.Utility.MemeDataTask;
+import group3.tcss450.uw.edu.thememebible.Utility.UrlBuilder;
 
 /**
  * The main entry point for the application.
+ *
+ * @author Peter Phe
+ * @author Phansa Chaonpoj
+ * @author Vu Hoang
  */
 public class MainActivity extends AppCompatActivity implements InitialFragment.OnFragmentInteractionListener,
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
-        MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener
+        MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener,
+        MemeDataTask.OnTaskComplete, LoadingFragment.DisplayInterface
 
 
 {
     private static final String TAG = "MainActivity";
-    protected static final String PARTIAL_URL = "http://thememebible.ddns.net/app/app_";
-    protected static final String SEARCH_API = "http://version1.api.memegenerator.net/Instances_Search?&pageIndex=0&pageSize=12";
-    protected static final String POPULAR_API = "http://version1.api.memegenerator.net/Generators_Select_ByPopular?pageIndex=0&pageSize=12&days=";
+    protected static final String PARTIAL_URL = "http://thememebible.ddns.net/app/app_"; // for backend
     private Bundle mLoginArgs;
     private Bundle mRegisterArgs;
+    private ArrayList<Meme> mMemeData;
+    private PhotoFragment mPhotoFragment;
+    private LoadingFragment mLoadingFragment;
     private String mSearch;
-    private RecyclerView mRecyclerView;
-    private ArrayList<Meme> mMemeList;
-    private RecyclerAdapter mAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
-    private ArrayList<Photo> mPhotosList;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mPhotoFragment = new PhotoFragment();
+        mLoadingFragment = new LoadingFragment();
+        mSearch = "";
 
         // instantiate InitialFragment
         if (savedInstanceState == null) {
@@ -51,28 +54,12 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
             }
         }
     }
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (mPhotosList.size() == 0) {
-//            requestPhoto();
-//        }
-//
-//    }
-
-
-    @Override
-    public void setMemeList(ArrayList<Meme> list) {
-        mMemeList = new ArrayList<Meme>(list);
-    }
 
     // implements all button press callbacks from other Fragments
     @Override
     public void onFragmentInteraction(int buttonID) {
+        AsyncTask<String, Void, String> task;
 
-        DownloadData data;
-        PhotoFragment f;
-        ArrayList<Meme> memeList = new ArrayList<Meme>();
         // handle different buttonIDs
         switch(buttonID) {
             case R.id.btnLogin: // from InitialFragment
@@ -101,29 +88,25 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.catalog_button1: // from CatalogFragment
-                f = new PhotoFragment();
-                f.setmLink(POPULAR_API);
-                loadFragment(f); //should be able to pass some strings.
-
-                //send type of  catalog string.
+                displayProgressBar();
+                task = new MemeDataTask(getApplicationContext(), this);
+                task.execute(UrlBuilder.getGeneratorsSelectByNewUrl());
                 break;
+            // catalog_button2
+            // catalog_button3
 
             case R.id.search_button:
-
-                //set async task DownloadData does not work.
-                data = new DownloadData(SEARCH_API);
-                data.setmQuery(mSearch);
-                //call from task - getListofMemes
-                memeList = data.getmMemes();
-                f = new PhotoFragment();
-                f.setmLink(SEARCH_API);
-                f.setmQuery(mSearch);
-                //pass into Photofragment to parse and display!
-                loadFragment(f);
+                displayProgressBar();
+                task = new MemeDataTask(getApplicationContext(), this);
+                task.execute(UrlBuilder.getGeneratorSearchUrl(mSearch)); // mSearch set in CatalogFragment
                 break;
-
-
         }
+    }
+
+    // callback for search button from CatalogFragment
+    @Override
+    public void setSearch(String theSearch) {
+        mSearch = theSearch;
     }
 
     /**
@@ -139,29 +122,50 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         transaction.commit();
     }
 
-    // callback for DisplayFragment data
+    // callback for Registration data
     @Override
     public void getRegistrationInformation(Bundle args) {
         mRegisterArgs = args;
     }
 
-    // callback for LoginFragment data
+    // callback for Login data
     @Override
     public void getLogin(Bundle args) {
         mLoginArgs = args;
     }
 
-    //callback for our CatalogFragment.
-
-    /**
-     * Sets the query for our search.
-     * @param args
-     */
+    // callback for MemeDataTask AsyncTask data
     @Override
-    public void setSearch(String args)
-    {
-        mSearch = args;
+    public void onTaskComplete(ArrayList<Meme> theMemeData) {
+        // dismiss the progress bar
+        dismissProgressBar();
+
+        // grab data from MemeDataTask AsyncTask
+        mMemeData = theMemeData;
+
+        // package data for photofragment
+        Bundle args = new Bundle();
+        args.putSerializable(getString(R.string.photo_data_key), mMemeData);
+        mPhotoFragment.setArguments(args);
+
+        // load fragment
+        loadFragment(mPhotoFragment);
     }
 
+    // LoadingFragment interface methods
+    @Override
+    public void displayProgressBar() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentContainer, mLoadingFragment)
+                .commit();
+    }
 
+    @Override
+    public void dismissProgressBar() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(mLoadingFragment)
+                .commit();
+    }
 }
