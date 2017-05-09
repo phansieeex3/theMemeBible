@@ -3,6 +3,7 @@ package group3.tcss450.uw.edu.thememebible;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "CatalogFragment";
 
+    private Bundle mSaveInstanceState;
     private OnFragmentInteractionListener mListener;
     private ArrayList<String> mTrendingAutoComplete;
     private ArrayAdapter<String> mStringAdapter;
@@ -48,18 +50,33 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mTrendingAutoComplete = new ArrayList<>();
+        mStringAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, mTrendingAutoComplete);
+        mSaveInstanceState = new Bundle();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSaveInstanceState.putSerializable("actv", mTrendingAutoComplete);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_catalog_fragment, container, false);
 
         // for populating AutoCompleteTextView
-        AsyncTask<String, Void, String> task = new DownloadData();
-        mTrendingAutoComplete = new ArrayList<>();
+        if (!mSaveInstanceState.isEmpty()) {
+            mTrendingAutoComplete = (ArrayList<String>) mSaveInstanceState.getSerializable("actvlist");
+        } else {
+            AsyncTask<String, Void, String> task = new DownloadData();
+            task.execute(UrlBuilder.getGeneratorsSelectByPopularUrl());
+        }
 
-        task.execute(UrlBuilder.getGeneratorsSelectByPopularUrl());
-
-        mStringAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, mTrendingAutoComplete);
         AutoCompleteTextView text = (AutoCompleteTextView) v.findViewById(R.id.search_auto_complete);
         text.setAdapter(mStringAdapter);
 
