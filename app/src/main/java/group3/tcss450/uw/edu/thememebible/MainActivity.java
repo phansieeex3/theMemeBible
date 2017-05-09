@@ -143,13 +143,15 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         // grab data from MemeDataTask AsyncTask
         mMemeData = theMemeData;
 
-        // package data for photofragment
-        Bundle args = new Bundle();
-        args.putSerializable(getString(R.string.photo_data_key), mMemeData);
-        mPhotoFragment.setArguments(args);
+        if (!mMemeData.isEmpty()) {
+            // package data for photofragment
+            Bundle args = new Bundle();
+            args.putSerializable(getString(R.string.photo_data_key), mMemeData);
+            mPhotoFragment.setArguments(args);
 
-        // load fragment
-        loadFragment(mPhotoFragment);
+            // load fragment
+            loadFragment(mPhotoFragment);
+        }
     }
 
     // LoadingFragment interface methods

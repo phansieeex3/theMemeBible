@@ -83,30 +83,29 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
 
+        ArrayList<Meme> memeList = new ArrayList<>();
+
         // encountered network issue or issue with URL
         if (result.startsWith("Unable to")) {
             Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
-            return;
-        }
+        } else {
 
-        ArrayList<Meme> memeList = new ArrayList<>();
+            try {
+                // parse response data
+                JSONArray jsonArray = new JSONObject(result).getJSONArray("result");
 
-        try {
-            // parse response data
-            JSONArray jsonArray = new JSONObject(result).getJSONArray("result");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    memeList.add(Meme.getMeme(jsonObject));
+                }
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                memeList.add(Meme.getMeme(jsonObject));
+                // if we weren't able to populate memeList, notify user to try again
+                if (memeList.isEmpty()) {
+                    Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                Log.e(TAG, "Could not parse malformed JSON: " + e.getMessage());
             }
-
-            // if we weren't able to populate memeList, notify user to try again
-            if (memeList.isEmpty()) {
-                Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
-                return;
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "Could not parse malformed JSON: " + e.getMessage());
         }
 
         // make callback to pass data back to the implementing class
