@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         mPhotoFragment = new PhotoFragment();
         mLoadingFragment = new LoadingFragment();
         mSearch = "";
-
         // instantiate InitialFragment
         if (savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
@@ -86,13 +85,11 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 loadFragment(new CatalogFragment());
                 break;
 
-            case R.id.catalog_button1: // from CatalogFragment
+            case R.id.popular_button: // from CatalogFragment
                 displayProgressBar();
                 task = new MemeDataTask(getApplicationContext(), this);
-                task.execute(UrlBuilder.getGeneratorsSelectByNewUrl());
+                task.execute(UrlBuilder.getGeneratorsSelectByPopularUrl());
                 break;
-            // catalog_button2
-            // catalog_button3
 
             case R.id.search_button:
                 displayProgressBar();

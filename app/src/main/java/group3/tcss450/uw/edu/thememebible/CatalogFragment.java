@@ -81,7 +81,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
         text.setAdapter(mStringAdapter);
 
         // add listeners for the buttons and inflate the view for InitialFragment
-        Button b = (Button) v.findViewById(R.id.catalog_button1);
+        Button b = (Button) v.findViewById(R.id.popular_button);
         b.setOnClickListener(this);
         b = (Button) v.findViewById(R.id.catalog_button2);
         b.setOnClickListener(this);
@@ -114,7 +114,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (mListener != null) {
             switch (v.getId()) {
-                case R.id.catalog_button1:
+                case R.id.popular_button:
                     mListener.onFragmentInteraction(v.getId());
                     break;
                 case R.id.catalog_button2:
