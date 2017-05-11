@@ -24,9 +24,8 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
         MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener,
         MemeDataTask.OnTaskComplete, LoadingFragment.DisplayInterface
-
-
 {
+
     private static final String TAG = "MainActivity";
     protected static final String PARTIAL_URL = "http://thememebible.ddns.net/app/app_"; // for backend
     private Bundle mLoginArgs;
@@ -109,19 +108,6 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         mSearch = theSearch;
     }
 
-    /**
-     * Helper method to switch out fragments.
-     *
-     * @param theFragment the fragment to be loaded
-     */
-    private void loadFragment(Fragment theFragment) {
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, theFragment)
-                .addToBackStack(null);
-        transaction.commit();
-    }
-
     // callback for Registration data
     @Override
     public void getRegistrationInformation(Bundle args) {
@@ -169,5 +155,18 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 .beginTransaction()
                 .remove(mLoadingFragment)
                 .commit();
+    }
+
+    /**
+     * Helper method to switch out fragments.
+     *
+     * @param theFragment the fragment to be loaded
+     */
+    private void loadFragment(Fragment theFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, theFragment)
+                .addToBackStack(null);
+        transaction.commit();
     }
 }

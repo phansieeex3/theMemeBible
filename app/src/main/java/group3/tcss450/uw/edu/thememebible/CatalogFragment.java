@@ -71,7 +71,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
 
         // for populating AutoCompleteTextView
         if (!mSaveInstanceState.isEmpty()) {
-            mTrendingAutoComplete = (ArrayList<String>) mSaveInstanceState.getSerializable("actvlist");
+            mTrendingAutoComplete = (ArrayList<String>) mSaveInstanceState.getSerializable("actv");
         } else {
             AsyncTask<String, Void, String> task = new DownloadData();
             task.execute(UrlBuilder.getGeneratorsSelectByPopularUrl());

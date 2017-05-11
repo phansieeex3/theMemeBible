@@ -1,12 +1,10 @@
 package group3.tcss450.uw.edu.thememebible;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 /**
  * Simple Fragment that displays a Progress Bar while AsyncTask runs.
