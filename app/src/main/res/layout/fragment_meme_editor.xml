@@ -1,0 +1,58 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="group3.tcss450.uw.edu.thememebible.meme_editor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingTop="0dp">
+
+        <EditText
+            android:id="@+id/edit_caption_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Top Caption"
+            android:inputType="textMultiLine"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp" />
+
+        <EditText
+            android:id="@+id/edit_caption_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Bottom Caption"
+            android:inputType="textMultiLine"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="2dp" />
+
+
+        <include layout="@layout/meme_content"
+            android:layout_height="338dp"
+            android:layout_width="376dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_content"
+            android:layout_gravity="center"
+            android:text="Done" />
+
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

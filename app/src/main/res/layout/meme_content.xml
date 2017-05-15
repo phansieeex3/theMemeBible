@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:showIn="@layout/fragment_meme_editor">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="312dp"
+        android:id="@+id/image_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/memecreate__activity__image"
+            android:layout_width="wrap_content"
+            android:layout_height="273dp"
+            android:layout_gravity="center_horizontal"
+
+            android:adjustViewBounds="true"
+            android:focusable="true"
+            android:paddingTop="0dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/cropped_doge" />
+
+    </LinearLayout>
+
+</FrameLayout>

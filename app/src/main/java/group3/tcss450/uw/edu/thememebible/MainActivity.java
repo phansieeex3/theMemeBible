@@ -23,7 +23,7 @@ import group3.tcss450.uw.edu.thememebible.Utility.UrlBuilder;
 public class MainActivity extends AppCompatActivity implements InitialFragment.OnFragmentInteractionListener,
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
         MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener,
-        MemeDataTask.OnTaskComplete, LoadingFragment.DisplayInterface
+        MemeDataTask.OnTaskComplete, LoadingFragment.DisplayInterface, meme_editor.OnFragmentInteractionListener, share_meme.OnFragmentInteractionListener
 {
 
     private static final String TAG = "MainActivity";
@@ -95,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 displayProgressBar();
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorSearchUrl(mSearch)); // mSearch set in CatalogFragment
+                break;
+            case R.id.catalog_button2:
+                loadFragment(new meme_editor()); // Testing UI for meme editor.
+                break;
+            case R.id.catalog_button3:
+                loadFragment(new share_meme());
                 break;
         }
     }
