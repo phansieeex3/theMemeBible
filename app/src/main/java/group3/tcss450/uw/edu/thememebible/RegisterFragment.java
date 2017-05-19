@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -25,7 +24,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.regex.Pattern;
 
 
 /**
@@ -60,7 +58,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 showToast(USERNAME_INFO);
             }
         });
-
 
         ImageButton infoPassword = (ImageButton) v.findViewById(R.id.btnPasswordInfo);
         infoPassword.setOnClickListener(new View.OnClickListener() {

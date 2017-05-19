@@ -16,16 +16,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/btnRegisterInfo"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/ic_info"-->
-        <!--android:layout_above="@+id/editPassword"-->
-        <!--android:layout_alignRight="@+id/editUsername"-->
-        <!--android:layout_alignEnd="@+id/editUsername" />-->
-        <!--android:text="Button"/>-->
-
     <EditText
         android:id="@+id/editUsername"
         android:layout_width="wrap_content"
@@ -36,6 +26,9 @@
         android:inputType="textNoSuggestions|textVisiblePassword"
         android:layout_below="@+id/tvRegister"
         android:layout_centerHorizontal="true"
+        android:paddingLeft="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="34dp"
         android:paddingRight="34dp"/>
 
     <EditText
@@ -49,6 +42,9 @@
         android:ems="10"
         android:hint="@string/password_loginfragment_label"
         android:inputType="textNoSuggestions|textPassword"
+        android:paddingLeft="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="34dp"
         android:paddingRight="34dp"/>
 
     <EditText
@@ -72,8 +68,6 @@
         android:layout_marginTop="14dp"
         android:text="@string/register_initialfragment_button" />
 
-
-    <!-- wtf color is that -->
     <ImageButton
         android:id="@+id/btnUsernameInfo"
         android:layout_width="wrap_content"
@@ -84,7 +78,8 @@
         android:layout_alignRight="@+id/editUsername"
         android:layout_alignEnd="@+id/editUsername"
         android:layout_marginLeft="-34dp"
-        android:layout_marginStart="-34dp" />
+        android:layout_marginStart="-34dp"
+        android:contentDescription="@string/info_button_content_description" />
 
     <ImageButton
         android:id="@+id/btnPasswordInfo"
@@ -96,16 +91,7 @@
         android:layout_alignRight="@+id/editPassword"
         android:layout_alignEnd="@+id/editPassword"
         android:layout_marginLeft="-34dp"
-        android:layout_marginStart="-34dp" />
-
-    <!--<ImageView-->
-        <!--android:id="@+id/imageView2"-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="100dp"-->
-        <!--app:srcCompat="@drawable/cropped_doge"-->
-        <!--android:layout_marginTop="27dp"-->
-        <!--android:layout_below="@+id/tvRegister"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:contentDescription="@string/app_name" />-->
+        android:layout_marginStart="-34dp"
+        android:contentDescription="@string/info_button_content_description" />
 
 </RelativeLayout>
