@@ -39,7 +39,6 @@
             android:paddingRight="16dp"
             android:paddingTop="2dp" />
 
-
         <include layout="@layout/meme_content"
             android:layout_height="338dp"
             android:layout_width="376dp" />

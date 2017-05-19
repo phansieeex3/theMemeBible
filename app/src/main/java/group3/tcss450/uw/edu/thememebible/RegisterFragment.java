@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -33,6 +35,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "RegisterFragment";
     private OnFragmentInteractionListener mListener;
     private static final int MINIMUM_LENGTH = 6;
+    private static final String USERNAME_INFO = "Username must be a minimum of "
+            + MINIMUM_LENGTH + " alphanumeric characters";
+    private static final String PASSWORD_INFO = "Password must be a minimum of "
+            + MINIMUM_LENGTH + " alphanumeric characters";
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -46,6 +52,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         // add listener for Register button
         Button b = (Button) v.findViewById(R.id.btnRegisterUser);
         b.setOnClickListener(this);
+
+        ImageButton infoUsername = (ImageButton) v.findViewById(R.id.btnUsernameInfo);
+        infoUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast(USERNAME_INFO);
+            }
+        });
+
+
+        ImageButton infoPassword = (ImageButton) v.findViewById(R.id.btnPasswordInfo);
+        infoPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast(PASSWORD_INFO);
+            }
+        });
 
         return v;
     }
@@ -83,12 +106,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
                 // check lengths
                 if (strUsername.length() < MINIMUM_LENGTH || !isAlphanumeric(strUsername)) {
-                    showToast("Username must be a minimum of " + MINIMUM_LENGTH
-                            + " alphanumeric characters!");
+                    showToast(USERNAME_INFO);
                     return;
                 } else if (strPassword.length() < MINIMUM_LENGTH || !isAlphanumeric(strPassword)) {
-                    showToast("Password must be a minimum of " + MINIMUM_LENGTH
-                            + " alphanumeric characters!");
+                    showToast(PASSWORD_INFO);
                     return;
                 } else if (TextUtils.isEmpty(strUsername)) { // check if any edittexts are empty
                     etUsername.setError("Please enter your username");

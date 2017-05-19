@@ -88,6 +88,7 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
         // encountered network issue or issue with URL
         if (result.startsWith("Unable to")) {
             Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+            // if API is down, could try to grab from a homebrewed API service here
         } else {
 
             try {

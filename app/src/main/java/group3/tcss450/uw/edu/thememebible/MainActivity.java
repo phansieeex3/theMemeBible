@@ -1,7 +1,12 @@
 package group3.tcss450.uw.edu.thememebible;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 
     private static final String TAG = "MainActivity";
     protected static final String PARTIAL_URL = "http://thememebible.ddns.net/app/app_"; // for backend
+    private static final int MY_PERMISSIONS_WRITE_EXTERNAL = 1001;
     private Bundle mLoginArgs;
     private Bundle mRegisterArgs;
     private ArrayList<Meme> mMemeData;
@@ -43,6 +49,16 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         mPhotoFragment = new PhotoFragment();
         mLoadingFragment = new LoadingFragment();
         mSearch = "";
+
+        // request permission to storage here.
+        // re-check in share_meme fragment for where to store images (external vs internal)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_WRITE_EXTERNAL);
+        }
+
         // instantiate InitialFragment
         if (savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
@@ -96,9 +112,11 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorSearchUrl(mSearch)); // mSearch set in CatalogFragment
                 break;
+
             case R.id.catalog_button2:
                 loadFragment(new meme_editor()); // Testing UI for meme editor.
                 break;
+
             case R.id.catalog_button3:
                 loadFragment(new share_meme());
                 break;
