@@ -26,7 +26,8 @@ import group3.tcss450.uw.edu.thememebible.Utility.UrlBuilder;
 public class MainActivity extends AppCompatActivity implements InitialFragment.OnFragmentInteractionListener,
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
         MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener,
-        MemeDataTask.OnTaskComplete, LoadingFragment.DisplayInterface, meme_editor.OnFragmentInteractionListener, share_meme.OnFragmentInteractionListener
+        MemeDataTask.OnTaskComplete, LoadingFragment.DisplayInterface, CaptionFragment.OnFragmentInteractionListener,
+        ShareFragment.OnFragmentInteractionListener
 {
 
     private static final String TAG = "MainActivity";
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         mLoadingFragment = new LoadingFragment();
         mSearch = "";
 
-        // request permission to storage here.
-        // re-check in share_meme fragment for where to store images (external vs internal)
+        // request permission for storage here.
+        // re-check in ShareFragment fragment for where to store images (external vs internal)
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -112,11 +113,11 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.catalog_button2:
-                loadFragment(new meme_editor()); // Testing UI for meme editor.
+                loadFragment(new CaptionFragment()); // Testing UI for CaptionFragment.
                 break;
 
             case R.id.catalog_button3:
-                loadFragment(new share_meme());
+                loadFragment(new ShareFragment()); // Testing UI for ShareFragment
                 break;
         }
     }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    tools:context="group3.tcss450.uw.edu.thememebible.share_meme">
+    tools:context="group3.tcss450.uw.edu.thememebible.ShareFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
