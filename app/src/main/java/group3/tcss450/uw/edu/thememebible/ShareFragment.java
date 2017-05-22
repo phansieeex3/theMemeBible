@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -28,7 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Save or share memes memes that have been captioned by the user.
+ * Save or share memes that have been captioned by the user.
  *
  * @author Peter Phe
  */
@@ -64,7 +63,7 @@ public class ShareFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_share, container, false);
 
         // get reference to ImageView containing the captioned meme for saving later
-        //todo the R.id.memecreate__activity__image might need to get changed later
+        //todo R.id.memecreate__activity__image might need to get changed later
         mMemeImage = (ImageView) v.findViewById(R.id.memecreate__activity__image);
         mFilename = "tmb_" + getTimestamp() + ".jpg"; // create filename here for Save feature
 
@@ -99,11 +98,7 @@ public class ShareFragment extends Fragment {
         // get imageview as bitmap
         Bitmap bitmap = ((BitmapDrawable) mMemeImage.getDrawable()).getBitmap();
 
-        // convert bitmap to byte array for creating path
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
-        // create URL for the meme image to parse as URI in intent
+        // create URL string for the meme image to parse as URI in intent
         String path = MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
                 bitmap, "Meme", null);
 
@@ -112,7 +107,7 @@ public class ShareFragment extends Fragment {
         intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
         intent.setType("image/jpeg");
 
-        // launch Intent chooser
+        // launch intent chooser
         Intent chooser = Intent.createChooser(intent, "Share to");
         if (intent.resolveActivity(getContext().getPackageManager()) != null)
             startActivity(chooser);
@@ -148,7 +143,7 @@ public class ShareFragment extends Fragment {
 
         File file;
 
-        // try another filename (based off timestamp) in case current exists
+        // try another filename based off timestamp in case current exists
         while ((file = new File(thePath, mFilename)).exists()) {
             mFilename = "tmb_" + getTimestamp() + ".jpg"; // grab new filename if already in use
         }
