@@ -19,7 +19,7 @@
         android:weightSum="1">
 
         <ImageView
-            android:id="@+id/memecreate__activity__image"
+            android:id="@+id/meme_item"
             android:layout_width="wrap_content"
             android:layout_height="273dp"
             android:layout_gravity="center_horizontal"

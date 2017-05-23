@@ -130,6 +130,9 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
                     mListener.setSearch(query);
                     mListener.onFragmentInteraction(v.getId());
                     break;
+                case R.id.item_image:
+                    mListener.onFragmentInteraction(v.getId());
+                    break;
             }
         }
     }

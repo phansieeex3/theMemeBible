@@ -64,7 +64,7 @@ public class ShareFragment extends Fragment {
 
         // get reference to ImageView containing the captioned meme for saving later
         //todo R.id.memecreate__activity__image might need to get changed later
-        mMemeImage = (ImageView) v.findViewById(R.id.memecreate__activity__image);
+        mMemeImage = (ImageView) v.findViewById(R.id.meme_item);
         mFilename = "tmb_" + getTimestamp() + ".jpg"; // create filename here for Save feature
 
         // listener for save button

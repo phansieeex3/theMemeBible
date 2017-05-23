@@ -2,12 +2,15 @@ package group3.tcss450.uw.edu.thememebible;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
         MainMenuFragment.OnFragmentInteractionListener, CatalogFragment.OnFragmentInteractionListener,
         MemeDataTask.OnTaskComplete, LoadingFragment.DisplayInterface, CaptionFragment.OnFragmentInteractionListener,
-        ShareFragment.OnFragmentInteractionListener
+        ShareFragment.OnFragmentInteractionListener, PhotoFragment.OnPhotofragmentInteractionListener
 {
 
     private static final String TAG = "MainActivity";
@@ -113,11 +116,14 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.catalog_button2:
-                loadFragment(new CaptionFragment()); // Testing UI for CaptionFragment.
+                //loadFragment(new CaptionFragment()); // Testing UI for CaptionFragment.
                 break;
 
             case R.id.catalog_button3:
                 loadFragment(new ShareFragment()); // Testing UI for ShareFragment
+                break;
+            case R.id.item_image:
+                //loadFragment(new CaptionFragment());
                 break;
         }
     }
@@ -189,4 +195,12 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 .addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onPhotofragmentInteractionListener(Drawable draw) {
+        loadFragment(new CaptionFragment(draw));
+
+    }
+
+
 }

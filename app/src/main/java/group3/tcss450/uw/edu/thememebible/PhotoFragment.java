@@ -40,6 +40,7 @@ public class PhotoFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ImageView mItemImage;
     private ArrayList<Meme> mMemeData;
+    private OnPhotofragmentInteractionListener mListener;
 
     public PhotoFragment() {
         // Required empty public constructor
@@ -63,6 +64,7 @@ public class PhotoFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_meme_list, container, false);
 
         mItemImage = (ImageView) v.findViewById(R.id.item_image);
+
 
         if (v instanceof RecyclerView) {
             Context context = v.getContext();
@@ -116,11 +118,44 @@ public class PhotoFragment extends Fragment {
     }
 
     /**
+     * When attached initialize the listener
+     *
+     * @param context Context
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnPhotofragmentInteractionListener) {
+            mListener = (OnPhotofragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnPhotofragmentInteractionListener");
+        }
+    }
+
+    /**
+     * Call super's onDetach and set our listener to null;
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
      * Helper method to initialize the RecyclerAdapter Photo data.
      */
     private void initializeAdapter() {
-        RecyclerAdapter adapter = new RecyclerAdapter(mPhoto);
+        RecyclerAdapter adapter = new RecyclerAdapter(mPhoto, mListener);
         mRecyclerView.setAdapter(adapter);
+    }
+
+    /**
+     *
+     */
+    public interface OnPhotofragmentInteractionListener
+    {
+        void onPhotofragmentInteractionListener(Drawable d);
     }
 
     /**

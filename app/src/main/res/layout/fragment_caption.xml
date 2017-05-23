@@ -26,6 +26,12 @@
             android:paddingRight="16dp"
             android:paddingTop="16dp" />
 
+        <ImageView
+            android:id="@+id/meme_item"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center" />
+
         <EditText
             android:id="@+id/edit_caption_bottom"
             android:layout_width="match_parent"
@@ -39,9 +45,6 @@
             android:paddingRight="16dp"
             android:paddingTop="2dp" />
 
-        <include layout="@layout/meme_content"
-            android:layout_height="338dp"
-            android:layout_width="376dp" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

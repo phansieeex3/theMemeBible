@@ -1,10 +1,12 @@
 package group3.tcss450.uw.edu.thememebible;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 /**
  * This fragment allows for captioning of meme images.
@@ -13,9 +15,11 @@ import android.view.ViewGroup;
  */
 public class CaptionFragment extends Fragment implements View.OnClickListener {
 
+    private Drawable mDrawable;
 
-    public CaptionFragment() {
+    public CaptionFragment(Drawable d) {
         // Required empty public constructor
+        mDrawable = d;
     }
 
 
@@ -23,7 +27,12 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_caption, container, false);
+        View v = inflater.inflate(R.layout.fragment_caption, container, false);
+        ImageView meme = (ImageView) v.findViewById(R.id.meme_item);
+        meme.setImageDrawable(mDrawable);
+
+
+        return v;
     }
 
     @Override
