@@ -94,7 +94,7 @@ public final class UrlBuilder {
      * &pageIndex=0&urlName=Insanity-Wolf&days=&apiKey=demo
      */
     public static String getInstancesSelectByPopularUrl(String theUrlName) {
-        String url = BASE_URL + "Instances_Select_ByPopular?languageCode=en&pageIndex=0&urlName=";
+        String url = BASE_URL + "Instances_Select_ByPopular?languageCode=en&pageIndex=0&pageSize=24&urlName=";
         if (theUrlName.length() > 0) { // if valid urlName, selects those created using the urlName
             url += theUrlName;
         } else { // selects most popular from all, not just those created by using the urlName
@@ -138,7 +138,7 @@ public final class UrlBuilder {
      * &pageSize=12&days=&apiKey=demo
      */
     public static String getGeneratorsSelectByPopularUrl() { // days purposely omitted (can add later)
-        return BASE_URL + "Generators_Select_ByPopular?pageIndex=0&pageSize=12&days=&" + addAPIKey();
+        return BASE_URL + "Generators_Select_ByPopular?pageIndex=0&pageSize=24&days=&" + addAPIKey();
     }
 
 

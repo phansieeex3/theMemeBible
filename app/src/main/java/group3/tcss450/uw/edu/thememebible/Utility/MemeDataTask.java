@@ -93,85 +93,33 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
             Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
             // if API is down, could try to grab from a homebrewed API service here
         } else {
-
             try {
 
-                Object json = new JSONObject(result).get("result");
+                // parse response data
+                JSONArray jsonArray = new JSONObject(result).getJSONArray("result");
 
-                if (json instanceof JSONObject) {
-                    // parse response data
-                    JSONArray jsonArray = new JSONObject(result).getJSONArray("result");
-
-                    if(jsonArray.length() == 1)
-                    {
-                        Log.e(TAG, result);
-                        mListener.onTaskCompleteCreate(Meme.getMeme(jsonArray.getJSONObject(0)));
-                    }
-                    else {
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            memeList.add(Meme.getMeme(jsonObject));
-                        }
-                        mListener.onTaskComplete(memeList);
-                    }
-
-
-                    // if we weren't able to populate memeList, notify user to try again
-                    if (memeList.isEmpty()) {
-                        Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
-                    }
-
-                    // make callback to pass data back to the implementing class
-
-
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    memeList.add(Meme.getMeme(jsonObject));
                 }
-                /*
-                else if (json instanceof JSONObject){
-
-                    JSONObject j = new JSONObject(result);
-                    Meme m = Meme.getMeme(j);
-                    mListener.onTaskCompleteCreate(m);
-                    //you have an object
+                mListener.onTaskComplete(memeList);
 
 
-
-                }*/
-
-                /*
-                    //you have an array
-
-                if(new JSONObject(result).getJSONObject("result") != JSONObject.NULL)
-                {
-
-                    JSONObject json = new JSONObject(result);
-                    Meme m = Meme.getMeme(json);
-                    mListener.onTaskCompleteCreate(m);
-
+                // if we weren't able to populate memeList, notify user to try again
+                if (memeList.isEmpty()) {
+                    Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
                 }
-                else // we know it's an array
-                    {
 
-                        // parse response data
-                        JSONArray jsonArray = new JSONObject(result).getJSONArray("result");
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            memeList.add(Meme.getMeme(jsonObject));
-                        }
-
-                        // if we weren't able to populate memeList, notify user to try again
-                        if (memeList.isEmpty()) {
-                            Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
-                        }
-
-                        // make callback to pass data back to the implementing class
-                        mListener.onTaskComplete(memeList);
-
-*/
-
-                //}
             } catch (JSONException e) {
                 Log.e(TAG, "Could not parse malformed JSON: " + e.getMessage() + result);
+                try {
+                    JSONObject json = new JSONObject(result).getJSONObject("result");
+                    mListener.onTaskCompleteCreate(Meme.getMeme(json));
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
 
