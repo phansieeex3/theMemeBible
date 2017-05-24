@@ -105,8 +105,8 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
                         memeList.add(Meme.getMeme(jsonObject));
                     }
 
-                    // phansa sucks
-
+                    //phansa sucks
+                    //I know right.
                     // if we weren't able to populate memeList, notify user to try again
                     if (memeList.isEmpty()) {
                         Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
