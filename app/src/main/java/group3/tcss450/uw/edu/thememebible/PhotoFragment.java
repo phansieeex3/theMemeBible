@@ -75,7 +75,7 @@ public class PhotoFragment extends Fragment {
             if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT, 0, false));
             } else {
-                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT+1));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT+1, 0, false));
             }
         }
 

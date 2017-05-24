@@ -93,9 +93,7 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
             Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
             // if API is down, could try to grab from a homebrewed API service here
         } else {
-
             try {
-
                 Object json = new JSONObject(result).get("result");
 
                 if (json instanceof JSONArray) {
