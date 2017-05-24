@@ -105,14 +105,10 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
                         memeList.add(Meme.getMeme(jsonObject));
                     }
 
-                    //phansa sucks
-                    //I know right.
                     // if we weren't able to populate memeList, notify user to try again
                     if (memeList.isEmpty()) {
                         Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
                     }
-
-                    mListener.onTaskComplete(memeList);
                 } else { // we know it's a JSONObject - returned from getImageInstanceUrl()
                     mListener.onTaskCompleteCreate(Meme.getMeme(new JSONObject(result).getJSONObject("result")));
                 }
@@ -120,6 +116,8 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
                 Log.e(TAG, "Could not parse malformed JSON: " + e.getMessage() + result);
             }
         }
+
+        mListener.onTaskComplete(memeList); // callback for list of memes
     }
 
     /**
