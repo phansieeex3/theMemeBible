@@ -182,13 +182,13 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     }
 
     @Override
-    public void onTaskCompleteCreate(Meme m) {
+    public void onTaskCompleteCreate(Meme theMeme) {
         dismissProgressBar();
 
-        if(m != null)
+        if(theMeme != null)
         {
             Bundle b = new Bundle();
-            b.putSerializable("meme", m);
+            b.putSerializable("meme", theMeme);
             ShareFragment sf = new ShareFragment();
             sf.setArguments(b);
             loadFragment(sf);
