@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,7 +45,6 @@ public class PhotoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -113,7 +111,7 @@ public class PhotoFragment extends Fragment {
                 d = LoadImageFromWebOperations(mMemeData.get(i).getmImageUrl());
 
             if (d != null)
-                mPhoto.add(new Photo((Drawable)d));
+                mPhoto.add(new Photo((Drawable)d, mMemeData.get(i)));
         }
     }
 
@@ -155,7 +153,7 @@ public class PhotoFragment extends Fragment {
      */
     public interface OnPhotofragmentInteractionListener
     {
-        void onPhotofragmentInteractionListener(Drawable d);
+        void onPhotofragmentInteractionListener(Drawable d, Meme m);
     }
 
     /**
@@ -164,7 +162,7 @@ public class PhotoFragment extends Fragment {
      * @return drawable object of the picture.
      * source: http://stackoverflow.com/questions/6407324/how-to-display-image-from-url-on-android
      */
-    private static Drawable LoadImageFromWebOperations(String url) {
+    public static Drawable LoadImageFromWebOperations(String url) {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
             Drawable d = Drawable.createFromStream(is, "src name");

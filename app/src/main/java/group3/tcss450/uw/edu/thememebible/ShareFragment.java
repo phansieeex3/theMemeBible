@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import group3.tcss450.uw.edu.thememebible.Model.Meme;
+
 /**
  * Save or share memes that have been captioned by the user.
  *
@@ -37,6 +39,7 @@ public class ShareFragment extends Fragment {
     private static final String MEME_DIRECTORY = "/Memes";
     private Button mSaveButton;
     private ImageView mMemeImage;
+    private Meme mMeme;
     private String mFilename;
 
     public ShareFragment() {
@@ -63,9 +66,15 @@ public class ShareFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_share, container, false);
 
         // get reference to ImageView containing the captioned meme for saving later
-        //todo R.id.memecreate__activity__image might need to get changed later
         mMemeImage = (ImageView) v.findViewById(R.id.meme_item);
+
         mFilename = "tmb_" + getTimestamp() + ".jpg"; // create filename here for Save feature
+
+        if(getArguments()!= null) {
+            mMeme = (Meme) getArguments().getSerializable("meme");
+            PhotoFragment pf = new PhotoFragment();
+            mMemeImage.setImageDrawable(pf.LoadImageFromWebOperations(mMeme.getmInstanceImageUrl()));
+        }
 
         // listener for save button
         mSaveButton = (Button) v.findViewById(R.id.save_button);

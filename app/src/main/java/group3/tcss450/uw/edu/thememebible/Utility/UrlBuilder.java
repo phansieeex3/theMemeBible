@@ -10,7 +10,7 @@ public final class UrlBuilder {
 
     private static final String BASE_URL = "http://version1.api.memegenerator.net/";
     private static final String API_KEY = "7A81A4B0-C434-4DA2-B8D6-1A63E5D63400";
-    private static final String USERNAME = "phansac";
+    private static final String USERNAME = "yellowbears";
     private static final String PASSWORD = "nomnomnom2";
 
     // prevent instantiation
@@ -34,8 +34,8 @@ public final class UrlBuilder {
      */
     public static String getInstanceCreateUrl(int theGeneratorID, int theImageID,
                                               String theTopText, String theBottomText) {
-        return BASE_URL + "Instance_Create?" + addCredentials() + "&langageCode=en&generatorID="
-                + theGeneratorID + "imageID=" + theImageID + "&text0=" + theTopText + "&text1="
+        return BASE_URL + "Instance_Create?" + addCredentials() + "&languageCode=en&generatorID="
+                + theGeneratorID + "&imageID=" + theImageID + "&text0=" + theTopText + "&text1="
                 + theBottomText + "&" + addAPIKey();
     }
 

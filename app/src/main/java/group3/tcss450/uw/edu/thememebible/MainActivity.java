@@ -1,7 +1,11 @@
 package group3.tcss450.uw.edu.thememebible;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +17,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import group3.tcss450.uw.edu.thememebible.Model.Meme;
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     private static final int MY_PERMISSIONS_WRITE_EXTERNAL = 1001;
     private Bundle mLoginArgs;
     private Bundle mRegisterArgs;
+    private Bundle mShareArgs;
     private ArrayList<Meme> mMemeData;
     private PhotoFragment mPhotoFragment;
     private LoadingFragment mLoadingFragment;
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         if (savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentContainer, new InitialFragment())
+                        .add(R.id.fragmentContainer, new CatalogFragment())//new InitialFragment())
                         .commit();
             }
         }
@@ -122,11 +128,20 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
             case R.id.catalog_button3:
                 loadFragment(new ShareFragment()); // Testing UI for ShareFragment
                 break;
-            case R.id.item_image:
-                //loadFragment(new CaptionFragment());
+            case R.id.done_button:
+                displayProgressBar();
+                task = new MemeDataTask(getApplicationContext(), this);
+                task.execute(UrlBuilder.getInstanceCreateUrl(mShareArgs.getInt("genId"),
+                        mShareArgs.getInt("imageId"), mShareArgs.getString("topText"), mShareArgs.getString("botText")));
+
+
                 break;
         }
     }
+
+    @Override
+    //callback for captionFragment
+    public void setShareArgs(Bundle args) { mShareArgs = args;}
 
     // callback for search button from CatalogFragment
     @Override
@@ -166,6 +181,21 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         }
     }
 
+    @Override
+    public void onTaskCompleteCreate(Meme m) {
+        dismissProgressBar();
+
+        if(m != null)
+        {
+            Bundle b = new Bundle();
+            b.putSerializable("meme", m);
+            ShareFragment sf = new ShareFragment();
+            sf.setArguments(b);
+            loadFragment(sf);
+
+        }
+    }
+
     // LoadingFragment interface methods
     @Override
     public void displayProgressBar() {
@@ -197,8 +227,18 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     }
 
     @Override
-    public void onPhotofragmentInteractionListener(Drawable draw) {
-        loadFragment(new CaptionFragment(draw));
+    public void onPhotofragmentInteractionListener(Drawable draw, Meme m) {
+
+        CaptionFragment cf = new CaptionFragment(draw);
+        Bundle b = new Bundle();
+        b.putSerializable("meme", m);
+        Bitmap bit = ((BitmapDrawable)draw).getBitmap();
+       // Bit
+        if(m == null) Log.e(TAG, "Meme is null");
+        //b.putSerializable("drawable", bit);
+        cf.setArguments(b);
+        loadFragment(cf);
+
 
     }
 
