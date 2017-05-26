@@ -9,13 +9,12 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -48,9 +47,8 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     private PhotoFragment mPhotoFragment;
     private LoadingFragment mLoadingFragment;
     private String mSearch;
-    private static final int PICK_IMAGE = 1;
+    private static final int PICK_IMAGE = 20;
     Uri imageUri;
-    Drawable drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.my_meme: // from MainMenuFragment
-                openGallery();
+               openGallery();
                 break;
 
             case R.id.popular_button: // from CatalogFragment
@@ -142,19 +140,19 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     }
 
     private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        imageUri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath()
+                + "/Memes/");
+        intent.setDataAndType(imageUri, "image/*");
+        startActivity(Intent.createChooser(intent, "Open folder"));
 
     }
+
     @Override
     protected void onActivityResult(int requestCode , int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             imageUri  = data.getData();
-            ImageView img = (ImageView)findViewById(R.id.item_image);
-            img.setImageURI(imageUri);
-//            img.setImageDrawable(drawable);
-//            loadFragment(new CaptionFragment(img));
 
         }
     }
