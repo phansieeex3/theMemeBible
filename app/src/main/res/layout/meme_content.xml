@@ -28,7 +28,7 @@
             android:focusable="true"
             android:paddingTop="0dp"
             android:scaleType="fitStart"
-            android:src="@drawable/cropped_doge" />
+            android:src="@drawable/doge" />
 
     </LinearLayout>
 

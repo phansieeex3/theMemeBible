@@ -4,11 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +18,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import group3.tcss450.uw.edu.thememebible.Model.Meme;
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     private PhotoFragment mPhotoFragment;
     private LoadingFragment mLoadingFragment;
     private String mSearch;
+    private static final int PICK_IMAGE = 1;
+    Uri imageUri;
+    Drawable drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         if (savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentContainer, new CatalogFragment())//new InitialFragment())
+                        .add(R.id.fragmentContainer, new MainMenuFragment())//new InitialFragment())
                         .commit();
             }
         }
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.my_meme: // from MainMenuFragment
-                loadFragment(new CatalogFragment());
+                openGallery();
                 break;
 
             case R.id.popular_button: // from CatalogFragment
@@ -122,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.catalog_button2:
-                //loadFragment(new CaptionFragment()); // Testing UI for CaptionFragment.
                 break;
 
             case R.id.catalog_button3:
@@ -136,6 +138,24 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 
 
                 break;
+        }
+    }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode , int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            imageUri  = data.getData();
+            ImageView img = (ImageView)findViewById(R.id.item_image);
+            img.setImageURI(imageUri);
+//            img.setImageDrawable(drawable);
+//            loadFragment(new CaptionFragment(img));
+
         }
     }
 
@@ -241,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 
 
     }
+
 
 
 }
