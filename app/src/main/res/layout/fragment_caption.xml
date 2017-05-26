@@ -30,6 +30,7 @@
             android:id="@+id/meme_item"
             android:layout_width="300dp"
             android:layout_height="300dp"
+            style="@style/myImageView"
             android:layout_gravity="center" />
 
         <EditText
@@ -52,6 +53,7 @@
             android:layout_below="@+id/image_content"
             android:layout_gravity="center"
             android:onClick="onClick"
+            style="@style/button"
             android:text="Done" />
 
 

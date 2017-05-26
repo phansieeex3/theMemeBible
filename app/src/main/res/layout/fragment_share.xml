@@ -12,10 +12,12 @@
         android:paddingBottom="16dp"
         android:paddingTop="0dp">
 
-        <include
-            layout="@layout/meme_content"
-            android:layout_width="376dp"
-            android:layout_height="338dp" />
+        <ImageView
+            android:id="@+id/meme_item"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            style="@style/myImageView"
+            android:layout_gravity="center" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -30,12 +32,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save"
+                style="@style/button"
                 android:gravity="center"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/share_button"
+                style="@style/button"
                 android:text="Share"/>
 
         </LinearLayout>
