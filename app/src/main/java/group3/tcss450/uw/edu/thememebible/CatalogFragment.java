@@ -85,7 +85,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
         b.setOnClickListener(this);
         b = (Button) v.findViewById(R.id.trending_button);
         b.setOnClickListener(this);
-        b = (Button) v.findViewById(R.id.catalog_button3);
+        b = (Button) v.findViewById(R.id.recently_used);
         b.setOnClickListener(this);
         b = (Button) v.findViewById(R.id.search_button);
         b.setOnClickListener(this);
@@ -120,7 +120,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
                 case R.id.trending_button:
                     mListener.onFragmentInteraction(v.getId());
                     break;
-                case R.id.catalog_button3:
+                case R.id.recently_used:
                     mListener.onFragmentInteraction(v.getId());
                     break;
                 case R.id.search_button: //putting in my query.

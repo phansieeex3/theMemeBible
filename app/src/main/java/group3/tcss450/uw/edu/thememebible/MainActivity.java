@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 task.execute(UrlBuilder.getGeneratorsSelectByTrendingUrl());
                 break;
 
-            case R.id.catalog_button3:
+            case R.id.recently_used:
                 displayProgressBar();
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorsSelectByRecentlyCaptionedUrl());

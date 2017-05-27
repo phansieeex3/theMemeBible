@@ -73,9 +73,11 @@ public class PhotoFragment extends Fragment {
              * source: http://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview
              */
             if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT, 0, false));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT));
+//                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT, 0, false));
             } else {
-                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT+1, 0, false));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT+1));
+//                mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT+1, 0, false));
             }
         }
 
