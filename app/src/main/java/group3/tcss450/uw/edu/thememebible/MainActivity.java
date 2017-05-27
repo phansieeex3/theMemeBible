@@ -122,11 +122,16 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 task.execute(UrlBuilder.getGeneratorSearchUrl(mSearch)); // mSearch set in CatalogFragment
                 break;
 
-            case R.id.catalog_button2:
+            case R.id.trending_button:
+                displayProgressBar();
+                task = new MemeDataTask(getApplicationContext(), this);
+                task.execute(UrlBuilder.getGeneratorsSelectByTrendingUrl());
                 break;
 
             case R.id.catalog_button3:
-                loadFragment(new ShareFragment()); // Testing UI for ShareFragment
+                displayProgressBar();
+                task = new MemeDataTask(getApplicationContext(), this);
+                task.execute(UrlBuilder.getGeneratorsSelectByRecentlyCaptionedUrl());
                 break;
             case R.id.done_button:
                 displayProgressBar();

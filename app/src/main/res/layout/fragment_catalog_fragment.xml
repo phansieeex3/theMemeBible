@@ -35,7 +35,7 @@
         android:layout_marginTop="170dp"
         android:layout_weight="0.20"
         android:gravity="center"
-        android:text="Popular"
+        android:text="Popular Memes"
         style="@style/button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -44,12 +44,12 @@
         tools:layout_constraintRight_creator="1" />
 
     <Button
-        android:id="@+id/catalog_button2"
+        android:id="@+id/trending_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="197dp"
         android:layout_marginTop="8dp"
-        android:text="Catalog2"
+        android:text="Trending Memes"
         style="@style/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,11 +64,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Catalog3"
+        android:text="Recently Used Memes"
         style="@style/button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/catalog_button2"
+        app:layout_constraintTop_toBottomOf="@+id/trending_button"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1" />
 
