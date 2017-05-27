@@ -1,6 +1,7 @@
 package group3.tcss450.uw.edu.thememebible;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -33,7 +34,7 @@ import group3.tcss450.uw.edu.thememebible.Model.Meme;
  *
  * @author Peter Phe
  */
-public class ShareFragment extends Fragment {
+public class ShareFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "ShareFragment";
     private static final String MEME_DIRECTORY = "/Memes";
@@ -41,6 +42,8 @@ public class ShareFragment extends Fragment {
     private ImageView mMemeImage;
     private Meme mMeme;
     private String mFilename;
+    private OnFragmentInteractionListener mListener;
+
 
     public ShareFragment() {
         // Required empty public constructor
@@ -57,6 +60,23 @@ public class ShareFragment extends Fragment {
         } else {
             mSaveButton.setEnabled(true);
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
@@ -94,8 +114,12 @@ public class ShareFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 shareImage();
+
+
             }
         });
+
+        v.findViewById(R.id.main_menu).setOnClickListener(this);
 
         return v;
     }
@@ -213,10 +237,23 @@ public class ShareFragment extends Fragment {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
+    @Override
+    public void onClick(View v) {
+        if(mListener != null)
+        {
+            if(v.getId() == R.id.main_menu)
+            {
+                mListener.onFragmentInteraction(v.getId());
+                Log.e("Share", "main menu clicked");
+            }
+
+        }
+    }
+
     /**
      * Callback interface gets declared here.
      */
     public interface OnFragmentInteractionListener {
-
+        void onFragmentInteraction(int id);
     }
 }

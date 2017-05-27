@@ -141,6 +141,9 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 
 
                 break;
+            case R.id.main_menu:
+                loadFragment(new MainMenuFragment());
+                break;
         }
     }
 
