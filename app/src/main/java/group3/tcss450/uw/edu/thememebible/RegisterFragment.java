@@ -32,7 +32,7 @@ import java.net.URLEncoder;
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "RegisterFragment";
     private OnFragmentInteractionListener mListener;
-    private static final int MINIMUM_LENGTH = 6;
+    private static final int MINIMUM_LENGTH = 4;
     private static final String USERNAME_INFO = "Username must be a minimum of "
             + MINIMUM_LENGTH + " alphanumeric characters";
     private static final String PASSWORD_INFO = "Password must be a minimum of "

@@ -8,21 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
+/**
+ * The Main Menu for the application.
+ *
+ * @author Vu Hoang
+ */
 public class MainMenuFragment extends Fragment implements View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
-
-
-
     private OnFragmentInteractionListener mListener;
 
     public MainMenuFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,8 +33,6 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
 
         return v;
     }
-
-
 
     @Override
     public void onAttach(Context context) {
@@ -85,7 +79,6 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(int buttonID);
     }
 }

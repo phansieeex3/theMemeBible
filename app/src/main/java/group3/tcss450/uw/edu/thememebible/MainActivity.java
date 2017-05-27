@@ -133,14 +133,14 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorsSelectByRecentlyCaptionedUrl());
                 break;
+
             case R.id.done_button:
                 displayProgressBar();
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getInstanceCreateUrl(mShareArgs.getInt("genId"),
                         mShareArgs.getInt("imageId"), mShareArgs.getString("topText"), mShareArgs.getString("botText")));
-
-
                 break;
+
             case R.id.main_menu:
                 loadFragment(new MainMenuFragment());
                 break;
@@ -264,10 +264,5 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         //b.putSerializable("drawable", bit);
         cf.setArguments(b);
         loadFragment(cf);
-
-
     }
-
-
-
 }

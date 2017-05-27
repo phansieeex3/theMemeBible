@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:id="@+id/recyclerview_item_row"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--android:weightSum="1"-->
-    <!--tools:context="group3.tcss450.uw.edu.thememebible.PhotoFragment">-->
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recyclerContainer"
@@ -26,4 +17,3 @@
         android:paddingRight="5dp"
         android:scaleType="centerCrop"/>
 </FrameLayout>
-<!--</LinearLayout>-->

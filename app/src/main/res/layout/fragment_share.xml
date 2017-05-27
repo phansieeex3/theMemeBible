@@ -1,56 +1,49 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingTop="0dp"
     tools:context="group3.tcss450.uw.edu.thememebible.ShareFragment">
 
+    <ImageView
+        android:id="@+id/meme_item"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        style="@style/myImageView"
+        android:layout_gravity="center" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingTop="0dp">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        <ImageView
-            android:id="@+id/meme_item"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            style="@style/myImageView"
-            android:layout_gravity="center" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:text="Save"
+            style="@style/button"
+            android:gravity="center"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/share_button"
+            style="@style/button"
+            android:text="Share"/>
 
-            <Button
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                style="@style/button"
-                android:gravity="center"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/share_button"
-                style="@style/button"
-                android:text="Share"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/main_menu"
-                style="@style/button"
-                android:text="Main Menu"/>
-
-        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_menu"
+            style="@style/button"
+            android:text="Main Menu"/>
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

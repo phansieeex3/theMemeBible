@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 /**
  * Simple Fragment that displays a Progress Bar while AsyncTask runs.
- *
- * @author Peter Phe
- * @version 1.0
  */
 public final class LoadingFragment extends Fragment {
 

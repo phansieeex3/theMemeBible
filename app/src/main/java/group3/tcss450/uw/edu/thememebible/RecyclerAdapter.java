@@ -1,15 +1,12 @@
 package group3.tcss450.uw.edu.thememebible;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.List;
-
-import group3.tcss450.uw.edu.thememebible.Model.Meme;
 
 /**
  * An adapter implementation to support the RecyclerView for the PhotoFragment.
@@ -19,7 +16,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     private List<Photo> mPhotos;
     private PhotoFragment.OnPhotofragmentInteractionListener mListener;
 
-
     /**constructor for recyclerAdapter
      * @param photos List of photos to be displayed. */
     public RecyclerAdapter(List<Photo> photos,PhotoFragment.OnPhotofragmentInteractionListener listener )
@@ -28,9 +24,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
         this.mPhotos = photos;
     }
 
-
-
-
     /**
      * Class for view holder.
      */
@@ -38,8 +31,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
 
         public ImageView mItemImage;
         public final View mView;
-
-
 
         public PhotoHolder(View v) {
             super(v);
@@ -54,14 +45,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
                 .inflate(R.layout.recyclerview_item_row, parent, false);
         PhotoHolder viewHolder = new PhotoHolder(inflatedView);
 
-
-
-
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerAdapter.PhotoHolder holder,final int position) {
+    public void onBindViewHolder(final RecyclerAdapter.PhotoHolder holder, final int position) {
         holder.mItemImage.setImageDrawable(mPhotos.get(position).mPhotoDraw);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +62,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
                 }
             }
         });
-
-
     }
 
 

@@ -65,6 +65,21 @@ public final class UrlBuilder {
     }
 
     /**
+     * Gets the URL for a specific page when searching instances by keyword(s).
+     *
+     * @param theQuery the instances to search for
+     * @param thePage the desired page
+     * @return the complete Instances_Search URL
+     *
+     * ex. http://version1.api.memegenerator.net/Instances_Search?q=insanity&pageIndex=0
+     * &pageSize=12&apiKey=demo
+     */
+    public static String getInstancesSearchUrl(String theQuery, int thePage) {
+        return BASE_URL + "Instances_Search?q=" + theQuery + "&pageIndex=" + thePage
+                + "&pageSize=12&" + addAPIKey();
+    }
+
+    /**
      * Gets the URL for new instances created by a specified urlName. If null, gets all.
      *
      * @param theUrlName the urlName to search for
@@ -75,6 +90,28 @@ public final class UrlBuilder {
      */
     public static String getInstancesSelectByNewUrl(String theUrlName) {
         String url = BASE_URL + "Instances_Select_ByNew?languageCode=en&pageIndex=0&urlName=";
+        if (theUrlName.length() > 0) { // if valid urlName, selects those created using the urlName
+            url += theUrlName;
+        } else { // selects most recent from all, not just those created by using the urlName
+            url += "null";
+        }
+
+        return url + "&" + addAPIKey();
+    }
+
+    /**
+     * Gets the URL for new instances created by a specified urlName by page. If null, gets all.
+     *
+     * @param theUrlName the urlName to search for
+     * @param thePage the desired page
+     * @return the complete Instances_Select_ByNew URL
+     *
+     * ex. http://version1.api.memegenerator.net/Instances_Select_ByNew?languageCode=en&pageIndex=0
+     * &urlName=Insanity-Wolf&apiKey=demo
+     */
+    public static String getInstancesSelectByNewUrl(String theUrlName, int thePage) {
+        String url = BASE_URL + "Instances_Select_ByNew?languageCode=en&pageIndex=" + thePage
+                + "&urlName=";
         if (theUrlName.length() > 0) { // if valid urlName, selects those created using the urlName
             url += theUrlName;
         } else { // selects most recent from all, not just those created by using the urlName
@@ -105,6 +142,29 @@ public final class UrlBuilder {
     }
 
     /**
+     * Gets the URL for a page selecting the most popular instances specified by a urlName.
+     * If null, gets all.
+     *
+     * @param theUrlName the urlName to search for
+     * @param thePage the desired page
+     * @return the complete Instances_Select_ByPopular URL
+     *
+     * ex. http://version1.api.memegenerator.net/Instances_Select_ByPopular?languageCode=en
+     * &pageIndex=0&urlName=Insanity-Wolf&days=&apiKey=demo
+     */
+    public static String getInstancesSelectByPopularUrl(String theUrlName, int thePage) {
+        String url = BASE_URL + "Instances_Select_ByPopular?languageCode=en&pageIndex=" + thePage
+                + "&pageSize=24&urlName=";
+        if (theUrlName.length() > 0) { // if valid urlName, selects those created using the urlName
+            url += theUrlName;
+        } else { // selects most popular from all, not just those created by using the urlName
+            url += "null";
+        }
+
+        return url + "&days=&" + addAPIKey(); // days parameter can be specified later if we want
+    }
+
+    /**
      * Gets the URL based on the specified query parameter.
      *
      * @param theQuery the generator images to search for
@@ -115,6 +175,21 @@ public final class UrlBuilder {
      */
     public static String getGeneratorSearchUrl(String theQuery) {
         return BASE_URL + "Generators_Search?q=" + theQuery + "&pageIndex=0&pageSize=12&" + addAPIKey();
+    }
+
+    /**
+     * Gets the URL for a page based on the specified query parameter.
+     *
+     * @param theQuery the generator images to search for
+     * @param thePage the desired page
+     * @return the complete Generator_Search URL
+     *
+     * ex. http://version1.api.memegenerator.net/Generators_Search?q=insanity&pageIndex=0
+     * &pageSize=12&apiKey=demo
+     */
+    public static String getGeneratorSearchUrl(String theQuery, int thePage) {
+        return BASE_URL + "Generators_Search?q=" + theQuery + "&pageIndex=" + thePage
+                + "&pageSize=12&" + addAPIKey();
     }
 
     /**
@@ -130,6 +205,19 @@ public final class UrlBuilder {
     }
 
     /**
+     * Gets the newest Generator images by page.
+     *
+     * @param thePage the desired page
+     * @return the complete Generators_Select_ByNew URL
+     *
+     * ex. http://version1.api.memegenerator.net/Generators_Select_ByNew?pageIndex=0&pageSize=12
+     * &apiKey=demo
+     */
+    public static String getGeneratorsSelectByNewUrl(int thePage) {
+        return BASE_URL + "Generators_Select_ByNew?pageIndex=" + thePage + "&pageSize=12&" + addAPIKey();
+    }
+
+    /**
      * Gets the most popular Generator images.
      *
      * @return the complete Generators_Select_ByPopular URL
@@ -139,6 +227,18 @@ public final class UrlBuilder {
      */
     public static String getGeneratorsSelectByPopularUrl() { // days purposely omitted (can add later)
         return BASE_URL + "Generators_Select_ByPopular?pageIndex=0&pageSize=24&days=&" + addAPIKey();
+    }
+
+    /**
+     * Gets the most popular Generator images by page number.
+     *
+     * @return the complete Generators_Select_ByPopular URL for a given page
+     *
+     * ex. http://version1.api.memegenerator.net/Generators_Select_ByPopular?pageIndex=0
+     * &pageSize=12&days=&apiKey=demo
+     */
+    public static String getGeneratorsSelectByPopularUrl(int thePage) { // days purposely omitted (can add later)
+        return BASE_URL + "Generators_Select_ByPopular?pageIndex=" + thePage + "&pageSize=24&days=&" + addAPIKey();
     }
 
 
