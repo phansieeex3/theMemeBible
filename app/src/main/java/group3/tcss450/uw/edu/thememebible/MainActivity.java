@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import group3.tcss450.uw.edu.thememebible.Model.Meme;
@@ -47,8 +48,10 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     private PhotoFragment mPhotoFragment;
     private LoadingFragment mLoadingFragment;
     private String mSearch;
+    private Meme mMeme;
+    private Drawable mDrawable;
     private static final int PICK_IMAGE = 20;
-    Uri imageUri;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.my_meme: // from MainMenuFragment
-               openGallery();
+                openGallery();
                 break;
 
             case R.id.popular_button: // from CatalogFragment
@@ -153,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 + "/Memes/");
         intent.setDataAndType(imageUri, "image/*");
         startActivity(Intent.createChooser(intent, "Open folder"));
-
     }
 
     @Override
@@ -211,14 +213,13 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     public void onTaskCompleteCreate(Meme theMeme) {
         dismissProgressBar();
 
-        if(theMeme != null)
+        if (theMeme != null)
         {
             Bundle b = new Bundle();
             b.putSerializable("meme", theMeme);
             ShareFragment sf = new ShareFragment();
             sf.setArguments(b);
             loadFragment(sf);
-
         }
     }
 
@@ -253,16 +254,25 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     }
 
     @Override
-    public void onPhotofragmentInteractionListener(Drawable draw, Meme m) {
+    public void setDrawableArgs(Drawable d, Meme m) {
+        mDrawable = d;
+        mMeme = m;
+    }
 
-        CaptionFragment cf = new CaptionFragment(draw);
-        Bundle b = new Bundle();
-        b.putSerializable("meme", m);
-        Bitmap bit = ((BitmapDrawable)draw).getBitmap();
-       // Bit
-        if(m == null) Log.e(TAG, "Meme is null");
-        //b.putSerializable("drawable", bit);
-        cf.setArguments(b);
+    @Override
+    public void onPhotofragmentInteractionListener() {
+        // prep arguments
+        Bundle args = new Bundle();
+        args.putSerializable("meme", mMeme);
+        Bitmap bitmap = ((BitmapDrawable) mDrawable).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] ba = baos.toByteArray();
+        args.putByteArray("drawable", ba);
+
+        // load fragment
+        CaptionFragment cf = new CaptionFragment();
+        cf.setArguments(args);
         loadFragment(cf);
     }
 }

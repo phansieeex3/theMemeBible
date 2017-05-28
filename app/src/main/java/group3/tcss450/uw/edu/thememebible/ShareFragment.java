@@ -44,7 +44,6 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
     private String mFilename;
     private OnFragmentInteractionListener mListener;
 
-
     public ShareFragment() {
         // Required empty public constructor
     }
@@ -114,8 +113,6 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 shareImage();
-
-
             }
         });
 

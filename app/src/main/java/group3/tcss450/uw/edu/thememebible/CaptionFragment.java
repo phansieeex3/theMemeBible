@@ -1,7 +1,10 @@
 package group3.tcss450.uw.edu.thememebible;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,23 +34,22 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     private Meme mMeme;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getArguments()!= null)
+        if(getArguments() != null) {
             mMeme = (Meme) getArguments().getSerializable("meme");
+
+            // get byte array of bitmap and convert to drawable
+            byte[] ba = getArguments().getByteArray("drawable");
+            Bitmap bitmap = BitmapFactory.decodeByteArray(ba, 0, ba.length);
+            mDrawable = new BitmapDrawable(getResources(), bitmap);
+        }
     }
 
-    /**
-     *
-     * @param d drawable object.
-     */
-    public CaptionFragment(Drawable d) {
+    public CaptionFragment() {
         // Required empty public constructor
-        mDrawable = d;
-
     }
 
     /**
@@ -75,7 +77,6 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,7 +87,6 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
 
         Button b = (Button) v.findViewById(R.id.done_button);
         b.setOnClickListener(this);
-
 
         return v;
     }
@@ -108,21 +108,15 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
                 bundle.putString("topText", topTextString);
                 bundle.putString("botText", botTextString);
 
-
-                //bundle.putInt("genId", 2);
-                //bundle.putInt("imageId", 166088);
-
-                if(mMeme != null) {
+                if (mMeme != null) {
                     bundle.putInt("genId", mMeme.getmGeneratorID());
                     bundle.putInt("imageId", mMeme.getmImageID());
                 }
 
                 mListener.setShareArgs(bundle);
                 mListener.onFragmentInteraction(v.getId());
-
             }
         }
-
     }
 
     public interface OnFragmentInteractionListener {

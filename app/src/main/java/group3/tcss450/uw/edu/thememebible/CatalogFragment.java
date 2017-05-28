@@ -90,7 +90,6 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
         b = (Button) v.findViewById(R.id.search_button);
         b.setOnClickListener(this);
 
-
         return v;
     }
 
@@ -131,7 +130,6 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
                     mListener.setSearch(query);
                     mListener.onFragmentInteraction(v.getId());
                     break;
-
             }
         }
     }

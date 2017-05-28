@@ -61,7 +61,7 @@ public final class UrlBuilder {
      * &pageSize=12&apiKey=demo
      */
     public static String getInstancesSearchUrl(String theQuery) {
-        return BASE_URL + "Instances_Search?q=" + theQuery + "&pageIndex=0&pageSize=12&" + addAPIKey();
+        return BASE_URL + "Instances_Search?q=" + theQuery + "&pageIndex=0&pageSize=24&" + addAPIKey();
     }
 
     /**
@@ -76,7 +76,7 @@ public final class UrlBuilder {
      */
     public static String getInstancesSearchUrl(String theQuery, int thePage) {
         return BASE_URL + "Instances_Search?q=" + theQuery + "&pageIndex=" + thePage
-                + "&pageSize=12&" + addAPIKey();
+                + "&pageSize=24&" + addAPIKey();
     }
 
     /**
@@ -174,7 +174,7 @@ public final class UrlBuilder {
      * &pageSize=12&apiKey=demo
      */
     public static String getGeneratorSearchUrl(String theQuery) {
-        return BASE_URL + "Generators_Search?q=" + theQuery + "&pageIndex=0&pageSize=12&" + addAPIKey();
+        return BASE_URL + "Generators_Search?q=" + theQuery + "&pageIndex=0&pageSize=24&" + addAPIKey();
     }
 
     /**
@@ -189,7 +189,7 @@ public final class UrlBuilder {
      */
     public static String getGeneratorSearchUrl(String theQuery, int thePage) {
         return BASE_URL + "Generators_Search?q=" + theQuery + "&pageIndex=" + thePage
-                + "&pageSize=12&" + addAPIKey();
+                + "&pageSize=24&" + addAPIKey();
     }
 
     /**
@@ -201,7 +201,7 @@ public final class UrlBuilder {
      * &apiKey=demo
      */
     public static String getGeneratorsSelectByNewUrl() {
-        return BASE_URL + "Generators_Select_ByNew?pageIndex=0&pageSize=12&" + addAPIKey();
+        return BASE_URL + "Generators_Select_ByNew?pageIndex=0&pageSize=24&" + addAPIKey();
     }
 
     /**
@@ -214,7 +214,7 @@ public final class UrlBuilder {
      * &apiKey=demo
      */
     public static String getGeneratorsSelectByNewUrl(int thePage) {
-        return BASE_URL + "Generators_Select_ByNew?pageIndex=" + thePage + "&pageSize=12&" + addAPIKey();
+        return BASE_URL + "Generators_Select_ByNew?pageIndex=" + thePage + "&pageSize=24&" + addAPIKey();
     }
 
     /**

@@ -133,7 +133,7 @@ public class PhotoFragment extends Fragment {
                 d = LoadImageFromWebOperations(mMemeData.get(i).getmImageUrl());
 
             if (d != null)
-                mPhoto.add(new Photo((Drawable) d, mMemeData.get(i)));
+                mPhoto.add(new Photo(d, mMemeData.get(i)));
         }
     }
 
@@ -192,7 +192,8 @@ public class PhotoFragment extends Fragment {
      * Callback interface.
      */
     public interface OnPhotofragmentInteractionListener {
-        void onPhotofragmentInteractionListener(Drawable d, Meme m);
+        void onPhotofragmentInteractionListener();
+        void setDrawableArgs(Drawable d, Meme m);
     }
 
     /**
@@ -268,7 +269,7 @@ public class PhotoFragment extends Fragment {
 
                         Drawable d = LoadImageFromWebOperations(Meme.getMeme(jsonObject).getmImageUrl());
                         if (d != null)
-                            mPhoto.add(new Photo((Drawable) d, memeList.get(i)));
+                            mPhoto.add(new Photo(d, memeList.get(i)));
                     }
 
                     mRecyclerAdapter.notifyDataSetChanged();

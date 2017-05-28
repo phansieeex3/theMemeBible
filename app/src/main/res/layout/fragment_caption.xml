@@ -1,62 +1,52 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="group3.tcss450.uw.edu.thememebible.CaptionFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="group3.tcss450.uw.edu.thememebible.CaptionFragment">
+    android:paddingBottom="16dp"
+    android:paddingTop="0dp">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/edit_caption_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingTop="0dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:hint="Top Caption"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp" />
 
-        <EditText
-            android:id="@+id/edit_caption_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:hint="Top Caption"
-            android:maxLines="1"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp" />
+    <ImageView
+        android:id="@+id/meme_item"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        style="@style/myImageView"
+        android:layout_gravity="center" />
 
-        <ImageView
-            android:id="@+id/meme_item"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            style="@style/myImageView"
-            android:layout_gravity="center" />
+    <EditText
+        android:id="@+id/edit_caption_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:maxLines="1"
+        android:gravity="center"
+        android:hint="Bottom Caption"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="2dp" />
 
-        <EditText
-            android:id="@+id/edit_caption_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:maxLines="1"
-            android:gravity="center"
-            android:hint="Bottom Caption"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="2dp" />
-
-        <Button
-            android:id="@+id/done_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/image_content"
-            android:layout_gravity="center"
-            android:onClick="onClick"
-            style="@style/button"
-            android:text="Done" />
-
-
-
-    </LinearLayout>
-
-
-</FrameLayout>
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_content"
+        android:layout_gravity="center"
+        android:onClick="onClick"
+        style="@style/button"
+        android:text="Done" />
+</LinearLayout>

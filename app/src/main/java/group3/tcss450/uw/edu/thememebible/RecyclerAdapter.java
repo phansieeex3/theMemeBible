@@ -57,8 +57,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onPhotofragmentInteractionListener(mPhotos.get(position).mPhotoDraw,
+                    mListener.setDrawableArgs(mPhotos.get(position).mPhotoDraw,
                             mPhotos.get(position).mMeme);
+                    mListener.onPhotofragmentInteractionListener();
                 }
             }
         });
