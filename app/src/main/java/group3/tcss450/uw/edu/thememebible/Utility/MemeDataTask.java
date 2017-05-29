@@ -93,8 +93,8 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
             // if API is down, could try to grab from a homebrewed API service here
         } else {
             try {
-                Object json = new JSONObject(result).get("result");
 
+                Object json = new JSONObject(result).get("result");
                 if (json instanceof JSONArray) {
                     // parse response data
                     JSONArray jsonArray = new JSONObject(result).getJSONArray("result");
@@ -109,6 +109,7 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
                         Toast.makeText(mContext, "No memes returned. Try again?", Toast.LENGTH_LONG).show();
                     }
                 } else { // we know it's a JSONObject - returned from getImageInstanceUrl()
+                    Log.e(TAG, "onTaskCompleteCreate!");
                     mListener.onTaskCompleteCreate(Meme.getMeme(new JSONObject(result).getJSONObject("result")));
                 }
             } catch (JSONException e) {

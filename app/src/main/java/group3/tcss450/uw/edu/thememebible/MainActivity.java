@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import group3.tcss450.uw.edu.thememebible.Model.Meme;
@@ -51,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     private Meme mMeme;
     private Drawable mDrawable;
     private static final int PICK_IMAGE = 20;
-    private Uri imageUri;
+    private Uri mImageUri;
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 
             case R.id.my_meme: // from MainMenuFragment
                 openGallery();
+
                 break;
 
             case R.id.popular_button: // from CatalogFragment
@@ -150,19 +154,54 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         }
     }
 
-    private void openGallery() {
+    private  void openGallery() {
+
+        /*
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        imageUri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath()
+
+        mImageUri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath()
                 + "/Memes/");
-        intent.setDataAndType(imageUri, "image/*");
-        startActivity(Intent.createChooser(intent, "Open folder"));
+        intent.setDataAndType(mImageUri, "image/*");
+        startActivity(Intent.createChooser(intent, "Open folder")); */
+
+
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+        startActivityForResult(chooserIntent, PICK_IMAGE);
+
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode , int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG, "onActivityResult!!");
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            imageUri  = data.getData();
+            mImageUri  = data.getData();
+            Log.e(TAG, "getting data");
+            try {
+                mBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageUri);
+                ShareFragment sf = new ShareFragment();
+                if(mBitmap != null)
+                {
+                    Log.e(TAG, "setting my bitmap");
+                    sf.setBitmap(mBitmap);
+                }
+                loadFragment(sf);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
         }
     }

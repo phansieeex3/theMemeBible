@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -43,6 +45,7 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
     private Meme mMeme;
     private String mFilename;
     private OnFragmentInteractionListener mListener;
+    private Bitmap mBitmap;
 
     public ShareFragment() {
         // Required empty public constructor
@@ -84,6 +87,8 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_share, container, false);
 
+        mSaveButton = (Button) v.findViewById(R.id.save_button);
+
         // get reference to ImageView containing the captioned meme for saving later
         mMemeImage = (ImageView) v.findViewById(R.id.meme_item);
 
@@ -93,10 +98,13 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
             mMeme = (Meme) getArguments().getSerializable("meme");
             PhotoFragment pf = new PhotoFragment();
             mMemeImage.setImageDrawable(pf.LoadImageFromWebOperations(mMeme.getmInstanceImageUrl()));
+            mSaveButton.setEnabled(true);
         }
 
+
+
         // listener for save button
-        mSaveButton = (Button) v.findViewById(R.id.save_button);
+
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,8 +113,17 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
                     saveToExternal();
                 else
                     saveToInternal();
+                saveToFile(mMeme.getmInstanceUrl());
             }
         });
+
+
+        if(mBitmap != null) {
+            Log.e(TAG, "bit map not null");
+            mMemeImage.setImageBitmap(mBitmap);
+            mSaveButton.setClickable(false);
+
+        }
 
         // listener for share button
         v.findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
@@ -121,6 +138,14 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * setting my uri.
+     * @param bit from main activity
+     */
+    public void setBitmap(Bitmap bit)
+    {
+        mBitmap = bit;
+    }
     /**
      * Helper method to Share the meme as an Intent to external activities.
      */
@@ -161,6 +186,22 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
                 Environment.DIRECTORY_PICTURES), MEME_DIRECTORY);
         writeToDevice(path);
     }
+
+
+    /**
+     * made for when the api is working. Saves the url of each picture
+     * in order to reuse.
+     * @param url of the picture.
+     */
+    private void saveToFile(String url) {
+        FileOutputStream fos;
+        try {
+            fos = getContext().openFileOutput("linkstring", Context.MODE_PRIVATE);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos);
+            outputStreamWriter.append(url + "\n");
+            outputStreamWriter.close();
+        } catch (Exception e) { e.printStackTrace();
+        } }
 
     /**
      * Helper method to write the image file to the desired path.
