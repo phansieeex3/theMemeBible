@@ -200,7 +200,6 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
             }
 
             try {
-
                 // parse in the objects.
                 JSONArray array = new JSONObject(result).getJSONArray("result");
 

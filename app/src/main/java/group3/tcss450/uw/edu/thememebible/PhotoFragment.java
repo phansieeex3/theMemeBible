@@ -44,15 +44,16 @@ public class PhotoFragment extends Fragment {
 
     private static final String TAG = "PhotoFragment";
     private static final int COLUMN_COUNT = 3;
+    private static final int IMAGES_PER_REQUEST = 24;
 
     private List<Photo> mPhoto;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mRecyclerAdapter;
     private GridLayoutManager mLayoutManager;
-    private ImageView mItemImage;
     private ArrayList<Meme> mMemeData;
     private LoadingFragment mLoadingFragment;
     private OnPhotofragmentInteractionListener mListener;
+    private String mQueryType;
 
     public PhotoFragment() {
         // Required empty public constructor
@@ -74,8 +75,7 @@ public class PhotoFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_meme_list, container, false);
 
-        mItemImage = (ImageView) v.findViewById(R.id.item_image);
-
+        mLoadingFragment = new LoadingFragment();
 
         if (v instanceof RecyclerView) {
             Context context = v.getContext();
@@ -91,28 +91,45 @@ public class PhotoFragment extends Fragment {
             mRecyclerView.setLayoutManager(mLayoutManager);
         }
 
+        // recyclerview properties to reduce view creation and binding times
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemViewCacheSize(IMAGES_PER_REQUEST);
+        mRecyclerView.setDrawingCacheEnabled(true);
+        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        mRecyclerView.setNestedScrollingEnabled(false);
+
+        // check if Bundle was packaged in arguments for displaying
+        if (getArguments() != null) {
+            mMemeData = (ArrayList<Meme>) getArguments().getSerializable(getString(R.string.photo_data_key));
+            mQueryType = getArguments().getString(getString(R.string.query_type_key)); // for the onLoadMore() ScrollListener
+        } else {
+            mMemeData = new ArrayList<>();
+        }
 
         // add endless scrolling functionality
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                new DownloadData().execute(UrlBuilder.getGeneratorsSelectByPopularUrl(page));
+                switch (mQueryType) {
+                    case "popular":
+                        new DownloadData().execute(UrlBuilder.getGeneratorsSelectByPopularUrl(page));
+                        break;
+                    case "search":
+                        String search = getArguments().getString(getString(R.string.query_string_key));
+                        new DownloadData().execute(UrlBuilder.getGeneratorSearchUrl(search, page));
+                        break;
+                    case "trending":
+                        // intentionally empty - API does not allow pages for this call
+                        break;
+                    case "recent":
+                        // intentionally empty - API does not allow pages for this call
+                        break;
+                }
             }
         });
 
-        // check if Bundle was packaged in arguments for displaying
-        if (getArguments() != null) {
-            mMemeData = (ArrayList<Meme>) getArguments()
-                    .getSerializable(getString(R.string.photo_data_key));
-        } else {
-            mMemeData = new ArrayList<>();
-        }
-
         initializeData();
         initializeAdapter();
-
-        mLoadingFragment = new LoadingFragment();
 
         return v;
     }
@@ -194,6 +211,7 @@ public class PhotoFragment extends Fragment {
     public interface OnPhotofragmentInteractionListener {
         void onPhotofragmentInteractionListener();
         void setDrawableArgs(Drawable d, Meme m);
+        void updateRecyclerAdapterData(RecyclerAdapter theRecyclerAdapter, int start, int end);
     }
 
     /**
@@ -272,7 +290,16 @@ public class PhotoFragment extends Fragment {
                             mPhoto.add(new Photo(d, memeList.get(i)));
                     }
 
-                    mRecyclerAdapter.notifyDataSetChanged();
+                    // structural change to the recyclerview -> redraws all of the views
+//                    mRecyclerAdapter.notifyDataSetChanged();
+
+                    // localized structural change to the recycler view -> draws only the inserted views
+//                    mRecyclerAdapter.notifyItemRangeInserted(mPhoto.size()-IMAGES_PER_REQUEST, mPhoto.size());
+
+                    // let UI thread create a worker thread to draw inserted views since onPostExecute()
+                    // also runs on the UI thread - don't want to block!
+                    mListener.updateRecyclerAdapterData(mRecyclerAdapter, mPhoto.size()-IMAGES_PER_REQUEST,
+                            mPhoto.size());
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Could not parse malformed JSON: " + e.getMessage() + result);

@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -55,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     private static final int PICK_IMAGE = 20;
     private Uri mImageUri;
     private Bitmap mBitmap;
+    private String mQueryType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.btnRegisterUser: // from RegisterFragment
-                Toast.makeText(this, "Thanks for registering!", Toast.LENGTH_SHORT).show();//cute
+                Toast.makeText(this, "Thanks for registering!", Toast.LENGTH_SHORT).show();
                 loadFragment(new MainMenuFragment());
                 break;
 
@@ -114,29 +114,32 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
 
             case R.id.my_meme: // from MainMenuFragment
                 openGallery();
-
                 break;
 
             case R.id.popular_button: // from CatalogFragment
                 displayProgressBar();
+                mQueryType = "popular";
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorsSelectByPopularUrl());
                 break;
 
             case R.id.search_button:
                 displayProgressBar();
+                mQueryType = "search";
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorSearchUrl(mSearch)); // mSearch set in CatalogFragment
                 break;
 
             case R.id.trending_button:
                 displayProgressBar();
+                mQueryType = "trending";
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorsSelectByTrendingUrl());
                 break;
 
             case R.id.recently_used:
                 displayProgressBar();
+                mQueryType = "recent";
                 task = new MemeDataTask(getApplicationContext(), this);
                 task.execute(UrlBuilder.getGeneratorsSelectByRecentlyCaptionedUrl());
                 break;
@@ -149,66 +152,64 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 break;
 
             case R.id.main_menu:
-                loadFragment(new MainMenuFragment());
+                // pops backstack all the way back to the main menu
+                getSupportFragmentManager().popBackStackImmediate(MainMenuFragment.class.getSimpleName(), 0);
+                Log.e(TAG, "main menu clicked - functions correctly once we put LoginFragment back");
                 break;
         }
     }
 
+    /**
+     * Helper method to open the gallery of saved memes for selection.
+     */
     private  void openGallery() {
-
-        /*
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-
-        mImageUri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath()
-                + "/Memes/");
-        intent.setDataAndType(mImageUri, "image/*");
-        startActivity(Intent.createChooser(intent, "Open folder")); */
-
-
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
 
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
 
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+        Intent chooserIntent = Intent.createChooser(getIntent, "Open image from...");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { pickIntent });
 
         startActivityForResult(chooserIntent, PICK_IMAGE);
-
     }
 
-
-
-
+    /**
+     * Handles the results of the Gallery intent when viewing saved memes via My Memes.
+     */
     @Override
-    protected void onActivityResult(int requestCode , int resultCode, Intent data){
+    protected void onActivityResult(int requestCode , int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e(TAG, "onActivityResult!!");
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             mImageUri  = data.getData();
-            Log.e(TAG, "getting data");
+
             try {
                 mBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageUri);
+
                 ShareFragment sf = new ShareFragment();
-                if(mBitmap != null)
-                {
-                    Log.e(TAG, "setting my bitmap");
-                    sf.setBitmap(mBitmap);
+
+                // prep arguments
+                if (mBitmap != null) {
+                    Bundle args = new Bundle();
+                    args.putByteArray(getString(R.string.my_meme_bitmap_key), bitmapToByteArray(mBitmap));
+                    sf.setArguments(args);
                 }
+
                 loadFragment(sf);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 
     @Override
     //callback for captionFragment
-    public void setShareArgs(Bundle args) { mShareArgs = args;}
+    public void setShareArgs(Bundle args) {
+        mShareArgs = args;
+    }
 
     // callback for search button from CatalogFragment
     @Override
@@ -241,6 +242,13 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
             // package data for photofragment
             Bundle args = new Bundle();
             args.putSerializable(getString(R.string.photo_data_key), mMemeData);
+
+            // for endless scrolling feature in PhotoFragment
+            args.putString(getString(R.string.query_type_key), mQueryType);
+            if (mSearch.length() > 0)
+                args.putString(getString(R.string.query_string_key), mSearch);
+
+            // set bundle as argument
             mPhotoFragment.setArguments(args);
 
             // load fragment
@@ -252,12 +260,13 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     public void onTaskCompleteCreate(Meme theMeme) {
         dismissProgressBar();
 
-        if (theMeme != null)
-        {
-            Bundle b = new Bundle();
-            b.putSerializable("meme", theMeme);
+        // R.string.my_meme_bitmap_key
+        //
+
+        if (theMeme != null) {
+            mShareArgs.putSerializable(getString(R.string.captioned_meme_key), theMeme);
             ShareFragment sf = new ShareFragment();
-            sf.setArguments(b);
+            sf.setArguments(mShareArgs);
             loadFragment(sf);
         }
     }
@@ -287,8 +296,9 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     private void loadFragment(Fragment theFragment) {
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragmentContainer, theFragment)
-                .addToBackStack(null);
+                .addToBackStack(theFragment.getClass().getSimpleName());
         transaction.commit();
     }
 
@@ -298,20 +308,39 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         mMeme = m;
     }
 
+    @Override // callback from PhotoFragment - frees onPostExecute() from drawing inserted views (unblocks UI thread)
+    public void updateRecyclerAdapterData(final RecyclerAdapter theAdapter, final int start, final int end) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                theAdapter.notifyItemRangeInserted(start, end);
+            }
+        });
+    }
+
     @Override
     public void onPhotofragmentInteractionListener() {
         // prep arguments
         Bundle args = new Bundle();
-        args.putSerializable("meme", mMeme);
+        args.putSerializable(getString(R.string.meme_obj_to_caption_key), mMeme);
         Bitmap bitmap = ((BitmapDrawable) mDrawable).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] ba = baos.toByteArray();
-        args.putByteArray("drawable", ba);
+        args.putByteArray(getString(R.string.drawable_to_caption_key), bitmapToByteArray(bitmap));
 
         // load fragment
         CaptionFragment cf = new CaptionFragment();
         cf.setArguments(args);
         loadFragment(cf);
+    }
+
+    /**
+     * Helper method to convert a Bitmap to a Byte Array for passing as argument to a fragment.
+     *
+     * @param theBitmap the bitmap to convert
+     * @return byte array of the bitmap
+     */
+    private byte[] bitmapToByteArray(Bitmap theBitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        theBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        return baos.toByteArray();
     }
 }

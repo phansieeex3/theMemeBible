@@ -21,6 +21,12 @@
     <string name="info_button_content_description">Requirements</string>
     <string name="LINKS">linkstring</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="query_type_key">query type</string>
+    <string name="query_string_key">query string</string>
+
+    <string name="captioned_meme_key">captioned meme</string>
+    <string name="my_meme_bitmap_key">my meme bitmap</string>
+
+    <string name="meme_obj_to_caption_key">meme object to caption</string>
+    <string name="drawable_to_caption_key">drawable to caption</string>
 </resources>

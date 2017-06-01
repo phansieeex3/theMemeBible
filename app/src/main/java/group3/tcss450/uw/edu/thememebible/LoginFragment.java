@@ -24,12 +24,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link LoginFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ * Allows user to login to use the application.
+ *
+ * @author Peter Phe
+ * @version 1.0
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "LoginFragment";
@@ -143,14 +142,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 JSONObject json = new JSONObject();
                 json.put("login_name", strings[1]);
                 json.put("login_pass", strings[2]);
-                Log.i(TAG, "json toString(): " + json.toString());
 
                 // prep for POST
                 OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
                 String data = URLEncoder.encode("json", "UTF-8")
                         + "=" + URLEncoder.encode(json.toString(), "UTF-8");
-
-                Log.i(TAG, "data to be sent: " + data);
 
                 // send data to stream
                 wr.write(data);

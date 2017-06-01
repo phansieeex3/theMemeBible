@@ -10,10 +10,11 @@ import android.widget.Button;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link InitialFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ * The initial fragment upon the application loading.
+ *
+ * @author Peter Phe
+ * @author Phansa Chaonpoj
+ * @version 1.0
  */
 public class InitialFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "InitialFragment";

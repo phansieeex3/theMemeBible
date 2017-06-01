@@ -3,14 +3,11 @@ package group3.tcss450.uw.edu.thememebible;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import group3.tcss450.uw.edu.thememebible.Model.Meme;
-import group3.tcss450.uw.edu.thememebible.Utility.MemeDataTask;
-import group3.tcss450.uw.edu.thememebible.Utility.UrlBuilder;
 
 /**
  * This fragment allows for captioning of meme images.
@@ -34,47 +29,22 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     private Meme mMeme;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if(getArguments() != null) {
-            mMeme = (Meme) getArguments().getSerializable("meme");
-
-            // get byte array of bitmap and convert to drawable
-            byte[] ba = getArguments().getByteArray("drawable");
-            Bitmap bitmap = BitmapFactory.decodeByteArray(ba, 0, ba.length);
-            mDrawable = new BitmapDrawable(getResources(), bitmap);
-        }
-    }
-
     public CaptionFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * When attached initialize the listener
-     *
-     * @param context Context
-     */
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof CaptionFragment.OnFragmentInteractionListener) {
-            mListener = (CaptionFragment.OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    /**
-     * Call super's onDetach and set our listener to null;
-     */
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+        if (getArguments() != null) {
+            mMeme = (Meme) getArguments().getSerializable(getString(R.string.meme_obj_to_caption_key));
+
+            // get byte array of bitmap and convert to drawable
+            byte[] ba = getArguments().getByteArray(getString(R.string.drawable_to_caption_key));
+            Bitmap bitmap = BitmapFactory.decodeByteArray(ba, 0, ba.length);
+            mDrawable = new BitmapDrawable(getResources(), bitmap);
+        }
     }
 
     @Override
@@ -119,6 +89,34 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * When attached initialize the listener
+     *
+     * @param context Context
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CaptionFragment.OnFragmentInteractionListener) {
+            mListener = (CaptionFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    /**
+     * Call super's onDetach and set our listener to null;
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * Callback interface for CaptionFragment.
+     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(int buttonID);
         void setShareArgs(Bundle args);

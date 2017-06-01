@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * An adapter implementation to support the RecyclerView for the PhotoFragment.
+ *
+ * @author Vu Hoang
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoHolder> {
 
@@ -64,7 +66,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
             }
         });
     }
-
 
     @Override
     public int getItemCount() {

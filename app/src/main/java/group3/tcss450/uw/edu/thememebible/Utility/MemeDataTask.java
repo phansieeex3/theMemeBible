@@ -114,6 +114,7 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "Could not parse malformed JSON: " + e.getMessage() + result);
+                Toast.makeText(mContext, "API may be down...", Toast.LENGTH_LONG).show();
             }
         }
 

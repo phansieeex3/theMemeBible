@@ -28,6 +28,9 @@ import java.net.URLEncoder;
 
 /**
  * Allows new users to Register to use the application.
+ *
+ * @author Peter Phe
+ * @version 1.0
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "RegisterFragment";
@@ -91,7 +94,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (mListener != null) {
             if (view.getId() == R.id.btnRegisterUser) {
-                Log.i(TAG, "btnRegister button pressed");
 
                 // get edit text references
                 EditText etUsername = (EditText) getActivity().findViewById(R.id.editUsername);
@@ -197,8 +199,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
                 String data = URLEncoder.encode("json", "UTF-8")
                         + "=" + URLEncoder.encode(json.toString(), "UTF-8");
-
-                Log.i(TAG, "data to be sent: " + data);
 
                 // send data to stream
                 wr.write(data);
