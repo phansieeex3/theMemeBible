@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
                 loadFragment(new CatalogFragment());
                 break;
 
-            case R.id.my_meme: // from MainMenuFragment
+            case R.id.my_memes: // from MainMenuFragment
                 openGallery();
                 break;
 
@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
             case R.id.main_menu:
                 // pops backstack all the way back to the main menu
                 getSupportFragmentManager().popBackStackImmediate(MainMenuFragment.class.getSimpleName(), 0);
-                Log.e(TAG, "main menu clicked - functions correctly once we put InitialFragment back");
                 break;
 
             case R.id.logout_button:

@@ -118,8 +118,9 @@ public class ShareFragment extends Fragment {
         // update the ImageView to use the newly captioned image from CaptionFragment
         if (getArguments() != null && getArguments().containsKey(getString(R.string.captioned_meme_key))) {
             mMeme = (Meme) getArguments().getSerializable(getString(R.string.captioned_meme_key));
-            mMemeImage.setImageDrawable(PhotoFragment.LoadImageFromWebOperations(
-                    mMeme.getmInstanceImageUrl()));
+            Bitmap bitmap = ((BitmapDrawable) PhotoFragment.LoadImageFromWebOperations(
+                    mMeme.getmInstanceImageUrl())).getBitmap();
+            mMemeImage.setImageBitmap(bitmap);
         }
 
         // from My Meme fragment

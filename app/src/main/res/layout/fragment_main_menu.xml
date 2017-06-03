@@ -8,7 +8,6 @@
     tools:context="group3.tcss450.uw.edu.thememebible.MainMenuFragment"
     android:weightSum="1">
 
-    <!-- TODO: Update blank fragment layout -->
     <Button
         android:id="@+id/meme_catalog"
         android:layout_width="wrap_content"
@@ -27,10 +26,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/my_meme"
+        android:id="@+id/my_memes"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="My Meme"
+        android:text="My Memes"
         style="@style/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

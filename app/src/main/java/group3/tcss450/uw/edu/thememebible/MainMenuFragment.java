@@ -28,7 +28,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
         // add listener for OK button_enabled
         Button b = (Button) v.findViewById(R.id.meme_catalog);
         b.setOnClickListener(this);
-        b = (Button) v.findViewById(R.id.my_meme);
+        b = (Button) v.findViewById(R.id.my_memes);
         b.setOnClickListener(this);
         b = (Button) v.findViewById(R.id.logout_button);
         b.setOnClickListener(this);
@@ -62,7 +62,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
                     mListener.onFragmentInteraction(v.getId());
                     break;
 
-                case R.id.my_meme:
+                case R.id.my_memes:
                     mListener.onFragmentInteraction(v.getId());
                     break;
 
