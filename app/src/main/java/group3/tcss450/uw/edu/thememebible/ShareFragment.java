@@ -72,7 +72,7 @@ public class ShareFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // enable/disable the Save button_enabled based on Storage permissions
+        // enable/disable the Save button based on Storage permissions
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             mSaveButton.setEnabled(false);
@@ -131,7 +131,7 @@ public class ShareFragment extends Fragment {
             mSaveButton.setEnabled(true);
         }
 
-        // listener for save button_enabled
+        // listener for save button
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,7 +146,7 @@ public class ShareFragment extends Fragment {
             }
         });
 
-        // listener for share button_enabled
+        // listener for share button
         v.findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +154,7 @@ public class ShareFragment extends Fragment {
             }
         });
 
-        // listener for main menu button_enabled
+        // listener for main menu button
         v.findViewById(R.id.main_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

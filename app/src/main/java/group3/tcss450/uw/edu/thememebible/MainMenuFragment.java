@@ -25,7 +25,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        // add listener for OK button_enabled
+        // add listener for OK button
         Button b = (Button) v.findViewById(R.id.meme_catalog);
         b.setOnClickListener(this);
         b = (Button) v.findViewById(R.id.my_memes);

@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         }
     }
 
-    // implements all button_enabled press callbacks from other Fragments
+    // implements all button press callbacks from other Fragments
     @Override
     public void onFragmentInteraction(int buttonID) {
         AsyncTask<String, Void, String> task;
@@ -210,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         mShareArgs = args;
     }
 
-    // callback for search button_enabled from CatalogFragment
+    // callback for search button from CatalogFragment
     @Override
     public void setSearch(String theSearch) {
         mSearch = theSearch;
