@@ -24,6 +24,7 @@
         android:ems="10"
         android:hint="@string/username_loginfragment_label"
         android:inputType="textNoSuggestions|textVisiblePassword"
+        android:maxLines="1"
         android:layout_below="@+id/tvRegister"
         android:layout_centerHorizontal="true"
         android:paddingLeft="0dp"
@@ -42,6 +43,7 @@
         android:ems="10"
         android:hint="@string/password_loginfragment_label"
         android:inputType="textNoSuggestions|textPassword"
+        android:maxLines="1"
         android:paddingLeft="0dp"
         android:paddingStart="0dp"
         android:paddingEnd="34dp"
@@ -57,12 +59,14 @@
         android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="@string/password_confirm_text"
-        android:inputType="textNoSuggestions|textPassword" />
+        android:inputType="textNoSuggestions|textPassword"
+        android:maxLines="1" />
 
     <Button
         android:id="@+id/btnRegisterUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/button"
         android:layout_below="@+id/editPasswordConf"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"

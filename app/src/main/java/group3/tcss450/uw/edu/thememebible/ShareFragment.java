@@ -37,10 +37,10 @@ import group3.tcss450.uw.edu.thememebible.Model.Meme;
  *
  * @author Peter Phe
  */
-public class ShareFragment extends Fragment implements View.OnClickListener {
+public class ShareFragment extends Fragment {
 
     private static final String TAG = "ShareFragment";
-    private static final String MEME_DIRECTORY = "/Memes";
+    public static final String MEME_DIRECTORY = "/Memes";
     private Button mSaveButton;
     private ImageView mMemeImage;
     private Meme mMeme;
@@ -57,19 +57,14 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            // right now, My Memes callback uses this.
-            // -should refactor to have image passed in from MainActivity's
-            //                                                  onTaskCompleteCreate(Meme theMeme)
-            // *need to create Bitmap in MainActivity and add to argument bundle
-            // -rewrite code to only use mBitmap
-            //
-            // -should pass in mInstanceImageUrl string of mMeme object as well for saveToFile() of link
-            //
-            // get byte array of bitmap and call imageview.setImageBitmap(bitmap)
-            //
-            // can then refactor shareImage() to just use mBitmap field
-            byte[] ba = getArguments().getByteArray(getString(R.string.my_meme_bitmap_key));
-            mBitmap = BitmapFactory.decodeByteArray(ba, 0, ba.length);
+            // from MainActivity (data coming in as Bitmap initiated by My Meme's openGallery())
+            if (getArguments().containsKey(getString(R.string.my_meme_bitmap_key))) {
+                byte[] ba = getArguments().getByteArray(getString(R.string.my_meme_bitmap_key));
+                if (ba != null)
+                    mBitmap = BitmapFactory.decodeByteArray(ba, 0, ba.length);
+                else
+                    mBitmap = null;
+            }
         }
     }
 
@@ -77,12 +72,16 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
-        // enable/disable the Save button based on Storage permissions
+        // enable/disable the Save button_enabled based on Storage permissions
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            mSaveButton.findViewById(R.id.save_button).setEnabled(false);
+            mSaveButton.setEnabled(false);
         } else {
             mSaveButton.setEnabled(true);
+        }
+
+        if (mBitmap != null) {
+            mSaveButton.setEnabled(false);
         }
     }
 
@@ -112,24 +111,26 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
         mSaveButton = (Button) v.findViewById(R.id.save_button);
 
         // get reference to ImageView containing the captioned meme for saving later
-        mMemeImage = (ImageView) v.findViewById(R.id.meme_item);
+        mMemeImage = (ImageView) v.findViewById(R.id.meme_item2);
 
         mFilename = "tmb_" + getTimestamp() + ".jpg"; // create filename here for Save feature
 
-        // update the ImageView to use the newly captioned image
+        // update the ImageView to use the newly captioned image from CaptionFragment
         if (getArguments() != null && getArguments().containsKey(getString(R.string.captioned_meme_key))) {
             mMeme = (Meme) getArguments().getSerializable(getString(R.string.captioned_meme_key));
-            mMemeImage.setImageDrawable(PhotoFragment.LoadImageFromWebOperations(mMeme.getmInstanceImageUrl()));
+            mMemeImage.setImageDrawable(PhotoFragment.LoadImageFromWebOperations(
+                    mMeme.getmInstanceImageUrl()));
+        }
+
+        // from My Meme fragment
+        if (mBitmap != null) {
+            mMemeImage.setImageBitmap(mBitmap);
+            mSaveButton.setEnabled(false);
+        } else {
             mSaveButton.setEnabled(true);
         }
 
-        if (mBitmap != null) {
-            mMemeImage.setImageBitmap(mBitmap);
-            mSaveButton.setClickable(false);
-            mSaveButton.setEnabled(false);
-        }
-
-        // listener for save button
+        // listener for save button_enabled
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,11 +140,12 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
                 else
                     saveToInternal();
 
-                saveToFile(mMeme.getmInstanceUrl()); // save instance URL just in case
+                if (mMeme != null)
+                    saveToFile(mMeme.getmInstanceUrl()); // save instance URL just in case
             }
         });
 
-        // listener for share button
+        // listener for share button_enabled
         v.findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +153,13 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        v.findViewById(R.id.main_menu).setOnClickListener(this);
+        // listener for main menu button_enabled
+        v.findViewById(R.id.main_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(v.getId());
+            }
+        });
 
         return v;
     }
@@ -285,12 +293,6 @@ public class ShareFragment extends Fragment implements View.OnClickListener {
     private Boolean isExternalStorageWriteable() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
-
-    @Override
-    public void onClick(View v) {
-        mListener.onFragmentInteraction(v.getId());
-    }
-
 
     /**
      * Callback interface gets declared here.

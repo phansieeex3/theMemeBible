@@ -67,14 +67,13 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_catalog_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_catalog, container, false);
 
         // for populating AutoCompleteTextView
         if (!mSaveInstanceState.isEmpty()) {
             mTrendingAutoComplete = (ArrayList<String>) mSaveInstanceState.getSerializable("actv");
         } else {
-            AsyncTask<String, Void, String> task = new DownloadData();
-            task.execute(UrlBuilder.getGeneratorsSelectByPopularUrl());
+            new DownloadData().execute(UrlBuilder.getGeneratorsSelectByPopularUrl());
         }
 
         AutoCompleteTextView text = (AutoCompleteTextView) v.findViewById(R.id.search_auto_complete);
@@ -176,7 +175,7 @@ public class CatalogFragment extends Fragment implements View.OnClickListener {
                 while ((s = buffer.readLine()) != null)
                     response += s;
             } catch (Exception e) {
-                response = "Unable to connect, Reason: " + e.getMessage();
+                response = "Cannot populate autocomplete text. Reason: " + e.getMessage();
             } finally {
                 if (urlConnection != null)
                     urlConnection.disconnect();

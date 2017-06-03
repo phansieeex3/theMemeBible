@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import group3.tcss450.uw.edu.thememebible.Model.Meme;
 
@@ -73,6 +74,12 @@ public class CaptionFragment extends Fragment implements View.OnClickListener {
                 // grab strings from the text fields
                 String topTextString = topText.getText().toString();
                 String botTextString = botText.getText().toString();
+
+                // the API call for this requires a caption or it returns error, so check length here
+                if (topTextString.length() == 0 && botTextString.length() == 0) {
+                    Toast.makeText(getContext(), "Please enter a caption!", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 Bundle bundle = new Bundle();
                 bundle.putString("topText", topTextString);

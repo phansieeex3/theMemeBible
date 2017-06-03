@@ -29,4 +29,5 @@
 
     <string name="meme_obj_to_caption_key">meme object to caption</string>
     <string name="drawable_to_caption_key">drawable to caption</string>
+    <string name="logout_button_label">Logout</string>
 </resources>

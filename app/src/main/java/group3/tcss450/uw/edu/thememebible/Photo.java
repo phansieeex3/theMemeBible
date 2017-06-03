@@ -21,7 +21,6 @@ public class Photo  {
         mMeme = meme;
     }
 
-
     /**Overloaded constructor */
     Photo (Drawable draw, Meme meme) {
         mPhotoDraw = draw;

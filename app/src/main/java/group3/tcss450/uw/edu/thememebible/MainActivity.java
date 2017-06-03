@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -78,13 +79,13 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         if (savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentContainer, new MainMenuFragment())//new InitialFragment())
+                        .add(R.id.fragmentContainer, new InitialFragment())
                         .commit();
             }
         }
     }
 
-    // implements all button press callbacks from other Fragments
+    // implements all button_enabled press callbacks from other Fragments
     @Override
     public void onFragmentInteraction(int buttonID) {
         AsyncTask<String, Void, String> task;
@@ -154,7 +155,12 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
             case R.id.main_menu:
                 // pops backstack all the way back to the main menu
                 getSupportFragmentManager().popBackStackImmediate(MainMenuFragment.class.getSimpleName(), 0);
-                Log.e(TAG, "main menu clicked - functions correctly once we put LoginFragment back");
+                Log.e(TAG, "main menu clicked - functions correctly once we put InitialFragment back");
+                break;
+
+            case R.id.logout_button:
+                // pops backstack all the way to the login fragment
+                getSupportFragmentManager().popBackStackImmediate(LoginFragment.class.getSimpleName(), 0);
                 break;
         }
     }
@@ -163,16 +169,10 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
      * Helper method to open the gallery of saved memes for selection.
      */
     private  void openGallery() {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
-
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-
-        Intent chooserIntent = Intent.createChooser(getIntent, "Open image from...");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { pickIntent });
-
-        startActivityForResult(chooserIntent, PICK_IMAGE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        String path = Environment.getExternalStorageDirectory().getPath() + ShareFragment.MEME_DIRECTORY;
+        intent.setDataAndType(Uri.parse(path), "image/jpeg");
+        startActivityForResult(Intent.createChooser(intent, "Select an image..."), PICK_IMAGE);
     }
 
     /**
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
         mShareArgs = args;
     }
 
-    // callback for search button from CatalogFragment
+    // callback for search button_enabled from CatalogFragment
     @Override
     public void setSearch(String theSearch) {
         mSearch = theSearch;
@@ -259,9 +259,6 @@ public class MainActivity extends AppCompatActivity implements InitialFragment.O
     @Override
     public void onTaskCompleteCreate(Meme theMeme) {
         dismissProgressBar();
-
-        // R.string.my_meme_bitmap_key
-        //
 
         if (theMeme != null) {
             mShareArgs.putSerializable(getString(R.string.captioned_meme_key), theMeme);

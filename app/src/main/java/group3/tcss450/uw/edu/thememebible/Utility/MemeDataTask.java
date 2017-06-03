@@ -96,6 +96,8 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
 
                 Object json = new JSONObject(result).get("result");
                 if (json instanceof JSONArray) {
+                    Log.i(TAG, "received response");
+
                     // parse response data
                     JSONArray jsonArray = new JSONObject(result).getJSONArray("result");
 
@@ -114,7 +116,7 @@ public class MemeDataTask extends AsyncTask<String, Void, String> {
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "Could not parse malformed JSON: " + e.getMessage() + result);
-                Toast.makeText(mContext, "API may be down...", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "This API call may be down... try one more time?", Toast.LENGTH_LONG).show();
             }
         }
 

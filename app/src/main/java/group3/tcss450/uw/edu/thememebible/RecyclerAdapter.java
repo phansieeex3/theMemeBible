@@ -18,10 +18,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     private List<Photo> mPhotos;
     private PhotoFragment.OnPhotofragmentInteractionListener mListener;
 
-    /**constructor for recyclerAdapter
-     * @param photos List of photos to be displayed. */
-    public RecyclerAdapter(List<Photo> photos,PhotoFragment.OnPhotofragmentInteractionListener listener )
-    {
+    /**
+     * Constructor for recyclerAdapter
+     * @param photos List of photos to be displayed.
+     */
+    public RecyclerAdapter(List<Photo> photos, PhotoFragment.OnPhotofragmentInteractionListener listener) {
         mListener = listener;
         this.mPhotos = photos;
     }
@@ -29,7 +30,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     /**
      * Class for view holder.
      */
-    public static class PhotoHolder extends RecyclerView.ViewHolder  {
+    public static class PhotoHolder extends RecyclerView.ViewHolder {
 
         public ImageView mItemImage;
         public final View mView;
@@ -45,9 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PhotoH
     public PhotoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item_row, parent, false);
-        PhotoHolder viewHolder = new PhotoHolder(inflatedView);
-
-        return viewHolder;
+        return new PhotoHolder(inflatedView);
     }
 
     @Override

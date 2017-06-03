@@ -26,7 +26,6 @@ public class Meme implements Serializable
     private int mInstancesCount;
     private int mRanking;
     private String mImageUrl;
-    private JSONObject mEntityVotesSummary;
     private String mEntityName;
     private int mEntityID;
     private int mTotalVotesSum;
@@ -72,18 +71,19 @@ public class Meme implements Serializable
 
             // handle entity votes summary JSONObject separately
             if (meme.has("entityVotesSummary")) {
-                m.mEntityVotesSummary = meme.getJSONObject("entityVotesSummary");
+                // temporary JSONObject just to grab data. JSONObject not serializable.
+                JSONObject evSummary = meme.getJSONObject("entityVotesSummary");
 
-                if (m.mEntityVotesSummary.has("entityName"))
-                    m.mEntityName = m.mEntityVotesSummary.getString("entityName");
-                if (m.mEntityVotesSummary.has("entityID"))
-                    m.mEntityID = m.mEntityVotesSummary.getInt("entityID");
-                if (m.mEntityVotesSummary.has("totalVotesSum"))
-                    m.mTotalVotesSum = m.mEntityVotesSummary.getInt("totalVotesSum");
-                if (m.mEntityVotesSummary.has("userID"))
-                    m.mUserID = m.mEntityVotesSummary.getString("userID");
-                if (m.mEntityVotesSummary.has("userVoteScore"))
-                    m.mUserVoteScore = m.mEntityVotesSummary.getString("userVoteScore");
+                if (evSummary.has("entityName"))
+                    m.mEntityName = evSummary.getString("entityName");
+                if (evSummary.has("entityID"))
+                    m.mEntityID = evSummary.getInt("entityID");
+                if (evSummary.has("totalVotesSum"))
+                    m.mTotalVotesSum = evSummary.getInt("totalVotesSum");
+                if (evSummary.has("userID"))
+                    m.mUserID = evSummary.getString("userID");
+                if (evSummary.has("userVoteScore"))
+                    m.mUserVoteScore = evSummary.getString("userVoteScore");
             }
 
             // additional fields for instances search
@@ -141,10 +141,6 @@ public class Meme implements Serializable
 
     public String getmImageUrl() {
         return mImageUrl;
-    }
-
-    public JSONObject getmEntityVotesSummary() {
-        return mEntityVotesSummary;
     }
 
     public String getmEntityName() {

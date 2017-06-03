@@ -43,7 +43,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        // add listener for OK button
+        // add listener for OK button_enabled
         Button b = (Button) v.findViewById(R.id.btnOK);
         b.setOnClickListener(this);
 
@@ -94,6 +94,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     return;
                 }
 
+                // edittext ok to clear now
+                etPassword.setText("");
+
                 // initiate login service
                 new LoginWebServiceTask(view.getId()).execute(MainActivity.PARTIAL_URL,
                         strUsername, strPassword);
@@ -115,7 +118,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPreExecute() {
-            // disable button task is running
+            // disable button_enabled task is running
             getActivity().findViewById(mButtonID).setEnabled(false);
         }
 
@@ -172,7 +175,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(String response) {
-            // reenable button
+            // reenable button_enabled
             getActivity().findViewById(mButtonID).setEnabled(true);
             Log.i(TAG, "Response from server: " + response);
 

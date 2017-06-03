@@ -22,6 +22,7 @@
         android:ems="10"
         android:hint="@string/username_loginfragment_label"
         android:inputType="textVisiblePassword|textNoSuggestions"
+        android:maxLines="1"
         android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true" />
 
@@ -32,6 +33,7 @@
         android:ems="10"
         android:hint="@string/password_loginfragment_label"
         android:inputType="textNoSuggestions|textPassword"
+        android:maxLines="1"
         android:textColor="@android:color/black"
         android:layout_below="@+id/editTextUsername"
         android:layout_alignLeft="@+id/editTextUsername"
@@ -41,6 +43,7 @@
         android:id="@+id/btnOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/button"
         android:layout_marginTop="42dp"
         android:text="@string/login_initialfragment_button"
         android:layout_below="@+id/editTextPassword"
